@@ -8,6 +8,11 @@ if "a" == inp:
 
 
    ''')
+   inp = input("?")
+   if inp == "a":
+       a = float(input("a = "))
+       print(f"ppKwadratu o boku {a} = {a**2*}")
+
 elif "b" == inp:
    print('''
    a - pp szescianu
