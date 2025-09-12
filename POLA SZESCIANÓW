@@ -80,5 +80,17 @@ if inp == "a":
 
     elif inp =="B":
        a = float(input("podaj bok prostokąta" ))
-       b = float(input("podaj drugi bok prostokąta"))
+       b = float(input("podaj drugi bok prostokąta" ))
        print(f"Obwód prostokąta to {(a*2)+(b*2)}")
+
+    elif inp =="C":
+       a = float(input("podaj bok równoległoboku" ))
+       b = float(input("podaj drugi bok równoległoboku" ))
+       print(f"Obwód równoległoboku to {(a*2)+(b*2)}")
+    
+    elif inp =="D":
+       a = float(input("podaj pierwszą podstawę trapezu" ))
+       b = float(input("podaj drugą podstawę trapezu" ))
+       c = float(input("podaj bok trapezu" ))
+       d = float(input("podaj drugi bok trapezu" ))
+       print(f"Obwód trapezu to {a+b+c+d}")
