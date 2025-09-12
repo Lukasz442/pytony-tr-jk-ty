@@ -1,3 +1,6 @@
+import math
+PI = math.pi
+
 print("Wybierz figurę")
 print("a - figury płaskie")
 print("b - bryły ")
@@ -16,6 +19,14 @@ if inp == "a":
     g - pole koła
     h - pole rombu (podstawa × wysokość)
     i - pole rombu (przekątne)
+    A - obwód kwadratu
+    B - obwód prostokąta
+    C - obwód równoległoboku
+    D - obwód trapezu
+    E - obwód trójkąta
+    F - obwód trójkąta równobocznego
+    G - obwód koła
+    H - obwód rombu                                                       
     ''')
 
     inp = input("Wybór: ")
@@ -24,41 +35,50 @@ if inp == "a":
         a = float(input("Podaj bok kwadratu: "))
         print(f"Pole kwadratu to {a*2}")
 
-    if inp == "b":
+    elif inp == "b":
       a = float(input("Podaj podstawę prostokąta: "))
       b = float(input("podaj bok prostokąta: "))
       print(f"Pole prostokąta to {a*b}")
 
-    if inp == "c":
+    elif inp == "c":
        a = float(input("podaj podstawę równoległoboku: "))
        h = float(input("podaj wysokość równoległoboku: "))
        print(f"Pole równoległoboku to {a*h}")
     
-    if inp == "d":
+    elif inp == "d":
        a = float(input("podaj 1 podstawę" ))
        b = float(input("podaj 2 podstawę" ))
        h = float(input("podaj wyskokość" ))
        print(f"Pole trapezu to {((a+b)*h)/2}")
 
-    if inp == "e":
+    elif inp == "e":
        a = float(input("podaj postawę trójkąta" ))
        h = float(input("podaj wysokość trójkąta" ))
        print(f"Pole trójkąta to {(a*h)/2}")
 
-    if inp == "f":
+    elif inp == "f":
        a = float(input("podaj bok trójkąta" ))
        print(f"Pole trójkąta równobocznego to {((a**2)*(3**0.5))/4}")
 
-    if inp == "g":
+    elif inp == "g":
        r = float(input("podaj promień koła" ))
-       print(f"Pole koła to {3.14*(r**2)}")
+       print(f"Pole koła to {PI*(r**2)}")
 
-    if inp == "h":
+    elif inp == "h":
        a = float(input("podaj podstawę rombu" ))
        h = float(input("podaj wysokość rombu" ))
        print(f"Pole rombu to {a*h}")
 
-    if inp == "i":
+    elif inp == "i":
        e = float(input("podaj 1 przekątną" ))
        f = float(input("podaj 2 przekątną" ))
        print(f"Pole rombu to {(e*f)/2}")
+
+    elif inp =="A":
+       a = float(input("podaj bok kwadratu" ))
+       print(f"Obwód kwadratu to {a*4}")
+
+    elif inp =="B":
+       a = float(input("podaj bok prostokąta" ))
+       b = float(input("podaj drugi bok prostokąta"))
+       print(f"Obwód prostokąta to {(a*2)+(b*2)}")
