@@ -4,8 +4,9 @@ PI = math.pi
 print("Wybierz figurę")
 print("a - figury płaskie")
 print("b - bryły ")
+print("c - cos tam jeszcze XD")
 
-inp = input("a / b ? ")
+inp = input("a / b / c ? ")
 
 if inp == "a":
     print('''
@@ -32,65 +33,156 @@ if inp == "a":
     inp = input("Wybór: ")
 
     if inp == "a":
-        a = float(input("Podaj bok kwadratu: "))
+        a = float(input("Podaj bok kwadratu"))
         print(f"Pole kwadratu to {a*2}")
 
     elif inp == "b":
-      a = float(input("Podaj podstawę prostokąta: "))
-      b = float(input("podaj bok prostokąta: "))
+      a = float(input("Podaj podstawę prostokąta"))
+      b = float(input("podaj bok prostokąta"))
       print(f"Pole prostokąta to {a*b}")
 
     elif inp == "c":
-       a = float(input("podaj podstawę równoległoboku: "))
-       h = float(input("podaj wysokość równoległoboku: "))
+       a = float(input("podaj podstawę równoległoboku"))
+       h = float(input("podaj wysokość równoległoboku"))
        print(f"Pole równoległoboku to {a*h}")
     
     elif inp == "d":
-       a = float(input("podaj 1 podstawę" ))
-       b = float(input("podaj 2 podstawę" ))
-       h = float(input("podaj wyskokość" ))
+       a = float(input("podaj 1 podstawę"))
+       b = float(input("podaj 2 podstawę"))
+       h = float(input("podaj wyskokość"))
        print(f"Pole trapezu to {((a+b)*h)/2}")
 
     elif inp == "e":
-       a = float(input("podaj postawę trójkąta" ))
-       h = float(input("podaj wysokość trójkąta" ))
+       a = float(input("podaj postawę trójkąta"))
+       h = float(input("podaj wysokość trójkąta"))
        print(f"Pole trójkąta to {(a*h)/2}")
 
     elif inp == "f":
-       a = float(input("podaj bok trójkąta" ))
+       a = float(input("podaj bok trójkąta"))
        print(f"Pole trójkąta równobocznego to {((a**2)*(3**0.5))/4}")
 
     elif inp == "g":
-       r = float(input("podaj promień koła" ))
+       r = float(input("podaj promień koła"))
        print(f"Pole koła to {PI*(r**2)}")
 
     elif inp == "h":
-       a = float(input("podaj podstawę rombu" ))
-       h = float(input("podaj wysokość rombu" ))
+       a = float(input("podaj podstawę rombu"))
+       h = float(input("podaj wysokość rombu"))
        print(f"Pole rombu to {a*h}")
 
     elif inp == "i":
-       e = float(input("podaj 1 przekątną" ))
-       f = float(input("podaj 2 przekątną" ))
+       e = float(input("podaj 1 przekątną"))
+       f = float(input("podaj 2 przekątną"))
        print(f"Pole rombu to {(e*f)/2}")
 
     elif inp =="A":
-       a = float(input("podaj bok kwadratu" ))
+       a = float(input("podaj bok kwadratu"))
        print(f"Obwód kwadratu to {a*4}")
 
     elif inp =="B":
-       a = float(input("podaj bok prostokąta" ))
-       b = float(input("podaj drugi bok prostokąta" ))
+       a = float(input("podaj bok prostokąta"))
+       b = float(input("podaj drugi bok prostokąta"))
        print(f"Obwód prostokąta to {(a*2)+(b*2)}")
 
     elif inp =="C":
-       a = float(input("podaj bok równoległoboku" ))
-       b = float(input("podaj drugi bok równoległoboku" ))
+       a = float(input("podaj bok równoległoboku"))
+       b = float(input("podaj drugi bok równoległoboku"))
        print(f"Obwód równoległoboku to {(a*2)+(b*2)}")
     
     elif inp =="D":
-       a = float(input("podaj pierwszą podstawę trapezu" ))
-       b = float(input("podaj drugą podstawę trapezu" ))
-       c = float(input("podaj bok trapezu" ))
-       d = float(input("podaj drugi bok trapezu" ))
+       a = float(input("podaj pierwszą podstawę trapezu"))
+       b = float(input("podaj drugą podstawę trapezu"))
+       c = float(input("podaj bok trapezu"))
+       d = float(input("podaj drugi bok trapezu"))
        print(f"Obwód trapezu to {a+b+c+d}")
+
+    elif inp =="E":
+       a = float(input("podaj pierwszy bok trójkąta"))
+       b = float(input("podaj drugi bok trójkąta"))
+       c = float(input("podaj trzeci bok trójkąta"))
+       print(f"Obwód trójkąta to {a+b+c}")
+
+    elif inp =="F":
+       a = float(input("podaj bok trójkąta równobocznego"))
+       print(f"Obwód trójkąta równobocznego to {a*3}")
+
+    elif inp =="G":
+       r = float(input("podaj promień koła"))
+       print(f"Obwód trójkąta to {2*PI*r}")
+
+    elif inp =="H":
+       a = float(input("podaj bok rombu"))
+       print(f"Obwód rombu to {a*4}")
+
+if inp == "b":
+    print('''
+    Wybierz figurę:
+    a - objętość sześcianu
+    b - objętość prostopadłościanu
+    c - objętość graniastosłupa
+    d - objętość ostrosłupa
+    e - objętość walca
+    f - objętość stożka
+    g - objętość kuli
+    A - pole powierzchni sześcianu
+    B - pole powierzchni prostopadłościanu
+    C - pole powierzchni graniastosłupa
+    D - pole powierzchni ostrosłupa
+    E - pole powierzchni walca
+    F - pole powierzchni stożka
+    G - pole powierzchni kuli                                                      
+    ''')
+
+    inp = input("Wybór: ") 
+
+    if inp == "a":
+       a = float(input("podaj krawędz sześćainu"))
+       print(f"Objętość sześcianu to {a**3}")
+
+    elif inp == "b":
+       a = float(input("podaj pierwszy bok"))    
+       b = float(input("podaj drugi bok"))   
+       c = float(input("podaj trzeci bok"))  
+       print(f"Objętość prostopadłośćianu to {a*b*c}")
+
+    elif inp == "c":
+       a = float(input("podaj pierwszy bok podstawy"))    
+       b = float(input("podaj drugi bok podstawy"))   
+       h = float(input("podaj wysokość"))  
+       print(f"Objętość graniastosłupa to {(a*b)*h}")
+
+    elif inp == "d":
+       a = float(input("podaj pierwszy bok podstawy"))    
+       b = float(input("podaj drugi bok podstawy"))   
+       h = float(input("podaj wysokość"))  
+       print(f"Objętość ostrosłupa to {((a*b)/3)*h}")
+
+    elif inp == "e":
+       r = float(input("podaj promień podstawy"))    
+       h = float(input("podaj wysokość"))  
+       print(f"Objętość walca to {(PI*(r**2))*h}") 
+
+    elif inp == "f":
+       r = float(input("podaj promień podstawy"))    
+       h = float(input("podaj wysokość"))  
+       print(f"Objętość stożka to {((PI*(r**2))/3)*h}")
+
+    elif inp == "g":
+       r = float(input("podaj promień"))      
+       print(f"Objętość kuli to {(4/3)*PI*(r**3)}")
+
+    elif inp == "A":
+       a = float(input("podaj krawędz sześcianu"))      
+       print(f"Pole powierzchi sześcianu to {6*(a**2)}")
+
+    elif inp == "B":
+       a = float(input("podaj pierwszą krawędz"))    
+       b = float(input("podaj drugą"))
+       c = float(input("podaj trzecią krawędz")) 
+       print(f"Objętość walca to {(2*(a*b))+(2*(a*c))+(2*(b*c))}")
+
+    elif inp == "C":
+       a = float(input("podaj pierwszą krawędz"))    
+       b = float(input("podaj drugą"))
+       c = float(input("podaj trzecią krawędz")) 
+       print(f"Objętość walca to {(2*(a*b))+(2*(a*c))+(2*(b*c))}")        
