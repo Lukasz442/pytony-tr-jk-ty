@@ -1,0 +1,14 @@
+import plaskie
+
+while True:
+    inp:str = input().lower()
+    if inp == "b":
+        break
+    elif inp == "a":
+        a:float = float(input("a: "))
+        b:float = float(input("b: "))
+        wynk = plaskie.pp_prostokat(a,b)
+        print(f"ppProstokata = {wynk}")
+        print(f"ppProstokata = {plaskie.pp_prostokat(a,b)}")
+def pp_prostokat(a:float,b:float)->float:
+    return a*b
