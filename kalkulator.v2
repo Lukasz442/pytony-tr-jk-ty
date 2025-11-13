@@ -1,3 +1,12 @@
+#wszystkie bryły i 4 płaskie
+
+def pp_prostokat(a: float , b: float)->float:
+    return a*b
+
+def pp_kwadrat(a: float)->float:
+    return a**2
+
+
 import plaskie
 
 while True:
@@ -10,5 +19,12 @@ while True:
         wynk = plaskie.pp_prostokat(a,b)
         print(f"ppProstokata = {wynk}")
         print(f"ppProstokata = {plaskie.pp_prostokat(a,b)}")
-def pp_prostokat(a:float,b:float)->float:
-    return a*b
+
+while True:
+    inp:str = input().lower()       
+    if inp == "a":
+        break
+    a:float = float (input("a: "))
+    wynik = plaskie.pp_kwadrat(a)
+    print(f"pp_kwadrat = {wynik}")
+    print(f"pp_kwadrat = {plaskie.pp_kwadrat(a)}")  
