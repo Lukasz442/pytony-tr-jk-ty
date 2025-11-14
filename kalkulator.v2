@@ -1,4 +1,4 @@
-#wszystkie bryły i 4 płaskie
+#wszystkie pola bryły i 4 pola płaskie
 
 def pp_prostokat(a: float , b: float)->float:
     return a*b
@@ -6,25 +6,33 @@ def pp_prostokat(a: float , b: float)->float:
 def pp_kwadrat(a: float)->float:
     return a**2
 
+def pp_rownolegloboku(a: float , h: float)->float:
+    return a*h
+
+
 
 import plaskie
 
 while True:
     inp:str = input().lower()
-    if inp == "b":
-        break
-    elif inp == "a":
+    if inp == "a":
         a:float = float(input("a: "))
         b:float = float(input("b: "))
         wynk = plaskie.pp_prostokat(a,b)
-        print(f"ppProstokata = {wynk}")
-        print(f"ppProstokata = {plaskie.pp_prostokat(a,b)}")
+        print(f"pp_Prostokata = {wynk}")
+        print(f"pp_Prostokata = {plaskie.pp_prostokat(a,b)}")
 
-while True:
-    inp:str = input().lower()       
-    if inp == "a":
-        break
-    a:float = float (input("a: "))
-    wynik = plaskie.pp_kwadrat(a)
-    print(f"pp_kwadrat = {wynik}")
-    print(f"pp_kwadrat = {plaskie.pp_kwadrat(a)}")  
+    elif inp == "b":
+
+        a:float = float (input("a: "))
+        wynik = plaskie.pp_kwadrat(a)
+        print(f"pp_kwadrat = {wynik}")
+        print(f"pp_kwadrat = {plaskie.pp_kwadrat(a)}")  
+
+    elif inp == "c":
+
+        a:float = float(input("a: "))
+        h:float = float(input("h: "))
+        wynk = plaskie.pp_rownolegloboku(a,h)
+        print(f"pp_rownolegloboku = {wynk}")
+        print(f"pp_rownolegloboku = {plaskie.pp_rownolegloboku(a,h)}")
