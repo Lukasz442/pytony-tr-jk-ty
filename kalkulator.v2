@@ -9,9 +9,29 @@ def pp_kwadrat(a: float)->float:
 def pp_rownolegloboku(a: float , h: float)->float:
     return a*h
 
+def pp_trapezu(a:float , b:float , h: float)->float:
+    return ((a+b)*h)/2
+
+def pp_szescianu(a:float)->float:
+    return 6*a**2
+
+def pp_prostopadloscianu(a:float , b:float , c:float)->float:
+    return (2*a*b)+(2*a*c)+(2*b*c)
+
 
 
 import plaskie
+
+print('''
+      wybież figurę:
+    a= pole prostokąta
+    b= pole kwadratu
+    c= pole równoległoboku
+    d= pole rombu
+    e= pole powierzchni sześcianu
+    f= pole powierzchni prostopadłościanu
+      ''')
+
 
 while True:
     inp:str = input().lower()
@@ -36,3 +56,37 @@ while True:
         wynk = plaskie.pp_rownolegloboku(a,h)
         print(f"pp_rownolegloboku = {wynk}")
         print(f"pp_rownolegloboku = {plaskie.pp_rownolegloboku(a,h)}")
+
+    elif inp == "d":
+
+        a:float = float(input("a: "))
+        b:float = float(input("b: "))
+        h:float = float(input("h: "))
+        wynk = plaskie.pp_trapezu(a,b,h)
+        print(f"pp_trapezu = {wynk}")
+        print(f"pp_trapezu = {plaskie.pp_trapezu(a,h)}")        
+
+    elif inp == "e":
+
+        a:float = float(input("a: "))
+        wynk = plaskie.pp_szescianu(a)
+        print(f"pp_szescianu = {wynk}")
+        print(f"pp_szescianu = {plaskie.pp_szescianu(a)}") 
+
+    elif inp == "f":
+
+        a:float = float(input("a: "))
+        b:float = float(input("b: "))
+        c:float = float(input("c: "))
+        wynk = plaskie.pp_prostopadloscianu(a,b,c)
+        print(f"pp_prostopadloscianu = {wynk}")
+        print(f"pp_prostopadloscianu = {plaskie.pp_prostopadloscianu(a,b,c)}")     
+
+
+
+
+
+
+
+
+
