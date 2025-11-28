@@ -1,0 +1,61 @@
+from typing import List
+
+def n_poteg_2(n:int)->List:
+    x = []
+    for i in range(n):
+        x.append(2**i)
+    return x
+
+x = n_poteg_2(10)
+print(x)
+print(len(x))
+print(n_poteg_2(10))
+
+
+
+
+
+from typing import List
+from random import randint
+
+def n_poteg_2(n:int)->List:
+    return [2**i for i in range(n)]
+    # x = []
+    # for i in range(n):
+    #     x.append(2**i)
+    # return x
+
+def n_liczb_losowych_do_do(od:int, do:int, ile:int)->List:
+    return [randint(od,do) for _ in range(ile)]
+
+def list_iteration(lst:List)->None:
+    for idex, value in enumerate(lst):
+        print(f"index {idex} ---- v {value}")
+
+print(n_poteg_2(10))
+list_iteration(n_poteg_2(10))
+print(n_liczb_losowych_do_do(-100,100,10))
+list_iteration(n_liczb_losowych_do_do(-100,100,10))
+
+
+# x = n_poteg_2(10)
+# print(x)
+# print(len(x))
+# print(n_poteg_2(10))
+
+
+
+
+
+
+
+print(n_poteg_2(10))
+list_iteration(n_poteg_2(10))
+print(n_liczb_losowych_do_do(-100,100,10))
+list_iteration(n_liczb_losowych_do_do(-100,100,10))
+
+
+# x = n_poteg_2(10)
+# print(x)
+# print(len(x))
+# print(n_poteg_2(10))
