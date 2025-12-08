@@ -1,0 +1,104 @@
+import random
+#Przeciwnicy
+UDAgotki_hp = 30
+Udagotki_atak = 30
+Udagotki_dropzłota = 15
+
+Błażej_hp = 60
+Błażej_atak = 30
+Błażej_dropzłota = 10
+
+mahomed_hp = 30
+mahomed_atak = 5
+mahomed_dropzłota = -30
+
+wiedzma_hp = 75
+wiedzma_atak = 25
+wiedzma_dropzłota = 50
+wiedzma_manna = -40
+
+paluszki_hp = 100
+paluszki_atak = 100
+paluszki_dropzłota = 80
+paluszki_rozmowa = print("NIE POKONASZ MNIE ÓJÓ GARBATY")
+
+#Postacie
+print(''' 
+    wybież postać:
+    a - elf
+    b - wodnik
+    c - krasnolud
+    d - berserk
+''')
+inp = input()
+if inp == "a":
+    maxhp = 100
+    hp = 100
+    damage = 20
+    kasa = 300
+    manna = 200
+    czardamage = 60
+
+if inp == "b":
+    maxhp = 200
+    hp = 160
+    damage = 30
+    kasa = 50
+    manna = 50
+
+if inp == "c":
+    maxhp = 180
+    hp = 180
+    damage = 40
+    kasa = 200
+    manna = 50
+
+if inp == "d":
+    maxhp = 10000
+    hp = 10000
+    damage = 10000
+    kasa = 0
+    manna = 10000
+
+#sklep
+while True:
+        print("=== SKLEP ===")
+        print("Twoje złoto:", kasa)
+        print("1 - Mikstura życia +30 HP - 30 zł")
+        print("2 - Mikstura many +30 many - 20 zł")
+        print("3 - Ulepszenie broni +5 DMG - 50 zł")
+        print("4 - Wyjście ze sklepu")
+        wybor = input("Co chcesz kupić? ")
+
+        if wybor == "1":
+            if kasa >= 30:
+                kasa -= 30
+                hp += 30
+                if hp > maxhp:
+                    hp = maxhp
+                print("Kupiłeś miksturę życia! HP:", hp)
+            else:
+                print("Nie masz wystarczająco złota!")
+
+        elif wybor == "2":
+            if kasa >= 20:
+                kasa -= 20
+                manna += 30
+                print("Kupiłeś miksturę many! Mana:", manna)
+            else:
+                print("Brak złota!")
+
+        elif wybor == "3":
+            if kasa >= 50:
+                kasa -= 50
+                damage += 5
+                print("Broń ulepszona! Nowy DMG:", damage)
+            else:
+                print("Nie masz tyle złota!")
+
+        elif wybor == "4":
+            print("Wychodzisz ze sklepu.")
+            break
+
+        else:
+            print("Zły wybór!")
