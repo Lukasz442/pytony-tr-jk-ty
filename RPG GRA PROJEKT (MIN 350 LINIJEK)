@@ -1,8 +1,9 @@
 import random
-#Przeciwnicy
+
+# PRZECIWNICY
 UDAgotki_hp = 30
 Udagotki_atak = 30
-Udagotki_dropzłota = 15
+Udagotki_dropzłota = 300
 
 Błażej_hp = 60
 Błażej_atak = 30
@@ -22,16 +23,73 @@ paluszki_atak = 100
 paluszki_dropzłota = 80
 paluszki_rozmowa = print("NIE POKONASZ MNIE ÓJÓ GARBATY")
 
-#Postacie
+dawid_hp = 200
+dawid_atak = 50
+dawid_drop = 200
+
+transformers_hp = 150
+transformers_atak = 40
+transformers_drop = 150
+
+goblin_hp = 50
+goblin_atak = 20
+goblin_drop = 25
+
+tajemniczaistota_hp = 120
+tajemniczaistota_atak = 35
+tajemniczaistota_drop = 100
+
+# POSTACIE
 print(''' 
-    wybież postać:
-    a - elf
-    b - wodnik
-    c - krasnolud
-    d - berserk
+Wybierz postać:
+a - elf
+b - wodnik
+c - krasnolud
+d - SUPER_PLEMNICZEK
+e - czarodziej 
 ''')
-inp = input()
+inp = input("Twój wybór: ")
+
 if inp == "a":
+    maxhp = 100
+    hp = 100
+    damage = 20
+    kasa = 100
+    manna = 200
+    czardamage = 60
+
+elif inp == "b":
+    maxhp = 200
+    hp = 160
+    damage = 30
+    kasa = 50
+    manna = 50
+
+elif inp == "c":
+    maxhp = 180
+    hp = 180
+    damage = 40
+    kasa = 200
+    manna = 50
+
+elif inp == "d":
+    maxhp = 10000
+    hp = 10000
+    damage = 10000
+    kasa = 0
+    manna = 10000
+
+elif inp == "e":
+    maxhp = 120
+    hp = 120
+    damage = 10
+    czardamage = 100
+    kasa = 100
+    manna = 250
+    print("masz zjebane stawy w kolanach XD")
+
+else:
+    print("MASZ ELFA I SIĘ CIESZ")
     maxhp = 100
     hp = 100
     damage = 20
@@ -39,36 +97,21 @@ if inp == "a":
     manna = 200
     czardamage = 60
 
-if inp == "b":
-    maxhp = 200
-    hp = 160
-    damage = 30
-    kasa = 50
-    manna = 50
-
-if inp == "c":
-    maxhp = 180
-    hp = 180
-    damage = 40
-    kasa = 200
-    manna = 50
-
-if inp == "d":
-    maxhp = 10000
-    hp = 10000
-    damage = 10000
-    kasa = 0
-    manna = 10000
-
-#sklep
-while True:
-        print("=== SKLEP ===")
+# SKLEP
+def sklep():
+    global hp, maxhp, damage, manna, kasa, czardamage, inp
+    while True:
+        print("\n--- SKLEP ---")
         print("Twoje złoto:", kasa)
-        print("1 - Mikstura życia +30 HP - 30 zł")
-        print("2 - Mikstura many +30 many - 20 zł")
-        print("3 - Ulepszenie broni +5 DMG - 50 zł")
-        print("4 - Wyjście ze sklepu")
-        wybor = input("Co chcesz kupić? ")
+        print("1 - LECZONKOOOOOOO (+30 HP) - 30 zł")
+        print("2 - MANAAAAA (+30 manny) - 20 zł")
+        print("3 - DAMAGEEEE (+5 DMG) - 50 zł")
+        if inp in ["a", "e"]:
+            print("4 - DAMAGEEEEE CZARU (+20 DMG do czaru) - 70 zł")
+        print("5 - pokorne wyjscie ze sklepu")
+        print("6 - zestaw : +30 HP i +30 many - 45 zł")
+
+        wybor = input("co chcesz kupic ")
 
         if wybor == "1":
             if kasa >= 30:
@@ -76,29 +119,245 @@ while True:
                 hp += 30
                 if hp > maxhp:
                     hp = maxhp
-                print("Kupiłeś miksturę życia! HP:", hp)
+                print("kupiłeś LECZONKOOOOOOO HP:", hp)
             else:
-                print("Nie masz wystarczająco złota!")
+                print("WYPAD BIEDAKU!!!")
 
         elif wybor == "2":
             if kasa >= 20:
                 kasa -= 20
                 manna += 30
-                print("Kupiłeś miksturę many! Mana:", manna)
+                print("kupiłeś MANAAAAA Mana:", manna)
             else:
-                print("Brak złota!")
+                print("WYPAD BIEDAKU!!!")
 
         elif wybor == "3":
             if kasa >= 50:
                 kasa -= 50
                 damage += 5
-                print("Broń ulepszona! Nowy DMG:", damage)
+                print("kupiłeś DAMAGEEEE Nowy DMG:", damage)
             else:
-                print("Nie masz tyle złota!")
+                print("WYPAD BIEDAKU!!!")
 
-        elif wybor == "4":
-            print("Wychodzisz ze sklepu.")
+        elif wybor == "4" and inp in ["a", "e"]:
+            if kasa >= 70:
+                kasa -= 70
+                czardamage += 20
+                print("kupiłeś CZAR DAMAGEEEE Nowy DMG czaru:", czardamage)
+            else:
+                print("WYPAD BIEDAKU!!!")
+
+        elif wybor == "5":
+            print("Wychodzisz pokornie ze sklepu")
             break
+
+        elif wybor == "6":
+            if kasa >= 100:
+                kasa -= 100
+                hp += 30
+                manna += 30
+                if hp > maxhp:
+                    hp = maxhp
+                print("zestaw HP:", hp, "Mana:", manna)
+            else:
+                print("WYPAD BIEDAKU!!!")
 
         else:
             print("Zły wybór!")
+
+# LOSOWANIE PRZECIWNIKA
+def losuj_przeciwnika():
+    przeciwnicy = ["udagotek", "blazej", "mahomed", "wiedzma", "paluszki", "dawid", "robot", "goblin", "troll"]
+    return random.choice(przeciwnicy)
+
+# WALKA
+def walka():
+    global hp, kasa, damage, manna, inp, czardamage
+
+    przeciwnik = losuj_przeciwnika()
+
+    if przeciwnik == "udagotek":
+        php = UDAgotki_hp
+        pompa = Udagotki_atak
+        drop = Udagotki_dropzłota
+        print("\nUdagotki cię atakują!")
+
+    elif przeciwnik == "blazej":
+        php = Błażej_hp
+        pompa = Błażej_atak
+        drop = Błażej_dropzłota
+        print("\nBłażej cię atakuje!")
+
+    elif przeciwnik == "mahomed":
+        php = mahomed_hp
+        pompa = mahomed_atak
+        drop = mahomed_dropzłota
+        print("\nMahomed cię atakuje!")
+
+    elif przeciwnik == "wiedzma":
+        php = wiedzma_hp
+        pompa = wiedzma_atak
+        drop = wiedzma_dropzłota
+        manna += wiedzma_manna
+        print("\nWiedźma cię atakuje!")
+
+    elif przeciwnik == "paluszki":
+        php = paluszki_hp
+        pompa = paluszki_atak
+        drop = paluszki_dropzłota
+        print("\nJESTEM PALUSZKI SOLONE! NIE POKONASZ MNIE ÓJÓ GARBATY!")
+
+    elif przeciwnik == "smok":
+        php = dawid_hp
+        pompa = dawid_atak
+        drop = dawid_drop
+        print("\ndawid cię atakuje!")
+
+    elif przeciwnik == "robot":
+        php = transformers_hp
+        pompa = transformers_atak
+        drop = transformers_drop
+        print("\ntransformers cię atakuje!")
+
+    elif przeciwnik == "goblin":
+        php = goblin_hp
+        pompa = goblin_atak
+        drop = goblin_drop
+        print("\ngoblin cię atakuje!")
+
+    elif przeciwnik == "troll":
+        php = tajemniczaistota_hp
+        pompa = tajemniczaistota_atak
+        drop = tajemniczaistota_drop
+        print("\ntajemniczaistota cię atakuje!")
+
+    print(f"\n{przeciwnik.upper()} ma {php} HP i zadaje {pompa} dmg!")
+
+    koszt_ataku = 10
+    koszt_czaru = 20
+
+    while php > 0 and hp > 0:
+        print("\n--- WALKA ---")
+        print("Twoje HP:", hp)
+        print("Twoja MANA:", manna)
+        print("HP przeciwnika:", php)
+        print("\na - atak (koszt 10 many)")
+        print("b - ucieczka")
+        if inp in ["a", "e"]:
+            print("c - czar (koszt 20 many)")
+
+        wybor = input("WHAT ARE YOU DOING SON ?! ")
+
+        kryt = random.randint(1, 10)
+        if kryt == 10:
+            print("krytyczny atak x2 dmg")
+
+        if wybor == "a":
+            if manna >= koszt_ataku:
+                manna -= koszt_ataku
+                dmg = damage*2 if kryt == 10 else damage
+                php -= dmg
+                print(f"Zadałeś {dmg} obrażeń (mana: {manna})")
+            else:
+                print("Nie masz wystarczająco many")
+                continue
+
+        elif wybor == "c" and inp in ["a", "e"]:
+            if manna >= koszt_czaru:
+                manna -= koszt_czaru
+                dmg = czardamage*2 if kryt == 10 else czardamage
+                php -= dmg
+                print(f"Rzuciłeś czar Zadajesz {dmg} DMG (mana: {manna})")
+            else:
+                print("Za mało many na czar")
+                continue
+
+        elif wybor == "b":
+            print("pokornie uciekłes")
+            return
+
+        else:
+            print("zle wybierasz...")
+            continue
+
+        # Przeciwnik czasem leczy się losowo
+        if random.randint(1, 10) == 1 and php > 0:
+            heal = random.randint(5, 20)
+            php += heal
+            print(f"Przeciwnik leczy się o {heal} HP")
+
+        if php > 0:
+            hp -= pompa
+            print(f"Przeciwnik zadał {pompa} obrażeń")
+
+    if hp <= 0:
+        print("\nPRZEGRAŁES LMAO")
+        exit()
+
+    print("\nPokonałeś wroga")
+    kasa += drop
+    print("Zdobyłeś", drop, "złota")
+
+
+# LOSOWE WYDARZENIA
+def wydarzenia():
+    global hp, manna, kasa
+    los = random.randint(1, 7)
+    if los == 1:
+        print("\nspolondrowałes grobowiec jak zbok +50 złota")
+        kasa += 50
+    elif los == 2:
+        print("\nwyjebałeś się jak przegryw i straciłeś 10 HP")
+        hp -= 10
+        if hp < 0:
+            hp = 0
+    elif los == 3:
+        print("\nmyjesz się i zdobywasz 20 many")
+        manna += 20
+    elif los == 4:
+        print("\nprzeczytałes list ze masz raka -20 HP")
+        hp -= 20
+        if hp < 0:
+            hp = 0
+    elif los == 5:
+        print("\nznalazłes +10 złota")
+        kasa += 10
+    elif los == 6:
+        print("\nwypiłes coś podejrzanego (kto wie co to) następna runda +10 HP")
+        hp += 10
+        if hp > maxhp:
+            hp = maxhp
+    elif los == 7:
+        print("\nnasłuchałes się phonka czary +10 DMG")
+        if inp in ["a", "e"]:
+            czardamage += 10
+
+
+# MENU
+while True:
+    print("\n--- MENU ---")
+    print("a - walka")
+    print("b - sklep")
+    print("c - statystyki")
+    print("d - cos losowego XD")
+    print("e - zakończ grę")
+    wybor = input("WHAT ARE YOU GOING TO DO SON ?! ")
+
+    if wybor == "a":
+        walka()
+    elif wybor == "b":
+        sklep()
+    elif wybor == "c":
+        print("\n--- STATYSTYKI ---")
+        print("HP:", hp, "/", maxhp)
+        print("DMG:", damage)
+        print("DMG czaru:", czardamage if inp in ["a", "e"] else "Brak")
+        print("Mana:", manna)
+        print("Złoto:", kasa)
+    elif wybor == "d":
+        wydarzenia()
+    elif wybor == "e":
+        print("Koniec gry")
+        break
+    else:
+        print("zły wybór(ty widzisz co ty klikasz XD)")
