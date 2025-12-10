@@ -207,13 +207,13 @@ def walka():
         drop = paluszki_dropzłota
         print("\nJESTEM PALUSZKI SOLONE! NIE POKONASZ MNIE ÓJÓ GARBATY!")
 
-    elif przeciwnik == "smok":
+    elif przeciwnik == "dawid":
         php = dawid_hp
         pompa = dawid_atak
         drop = dawid_drop
         print("\ndawid cię atakuje!")
 
-    elif przeciwnik == "robot":
+    elif przeciwnik == "transformers":
         php = transformers_hp
         pompa = transformers_atak
         drop = transformers_drop
@@ -225,7 +225,7 @@ def walka():
         drop = goblin_drop
         print("\ngoblin cię atakuje!")
 
-    elif przeciwnik == "troll":
+    elif przeciwnik == "tajemniczaistota":
         php = tajemniczaistota_hp
         pompa = tajemniczaistota_atak
         drop = tajemniczaistota_drop
@@ -280,7 +280,6 @@ def walka():
             print("zle wybierasz...")
             continue
 
-        # Przeciwnik czasem leczy się losowo
         if random.randint(1, 10) == 1 and php > 0:
             heal = random.randint(5, 20)
             php += heal
@@ -328,7 +327,7 @@ def wydarzenia():
         if hp > maxhp:
             hp = maxhp
     elif los == 7:
-        print("\nnasłuchałes się phonka czary +10 DMG")
+        print("\nnasłuchałes się phonka - czary +10 DMG")
         if inp in ["a", "e"]:
             czardamage += 10
 
