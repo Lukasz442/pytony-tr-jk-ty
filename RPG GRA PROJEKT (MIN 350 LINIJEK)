@@ -16,7 +16,7 @@ mahomed_dropzłota = -30
 wiedzma_hp = 75
 wiedzma_atak = 25
 wiedzma_dropzłota = 50
-wiedzma_manna = -40
+wiedzma_mana = -40
 
 paluszki_hp = 100
 paluszki_atak = 100
@@ -55,7 +55,7 @@ if inp == "a":
     hp = 100
     damage = 20
     kasa = 100
-    manna = 200
+    mana = 200
     czardamage = 60
 
 elif inp == "b":
@@ -63,21 +63,21 @@ elif inp == "b":
     hp = 160
     damage = 30
     kasa = 50
-    manna = 50
+    mana = 50
 
 elif inp == "c":
     maxhp = 180
     hp = 180
     damage = 40
     kasa = 200
-    manna = 50
+    mana = 50
 
 elif inp == "d":
     maxhp = 10000
     hp = 10000
     damage = 10000
     kasa = 0
-    manna = 10000
+    mana = 10000
 
 elif inp == "e":
     maxhp = 120
@@ -85,7 +85,7 @@ elif inp == "e":
     damage = 10
     czardamage = 100
     kasa = 100
-    manna = 250
+    mana = 250
     print("masz zjebane stawy w kolanach XD")
 
 else:
@@ -94,14 +94,14 @@ else:
     hp = 100
     damage = 20
     kasa = 300
-    manna = 200
+    mana = 200
     czardamage = 60
 
 # SKLEP
 def sklep():
-    global hp, maxhp, damage, manna, kasa, czardamage, inp
+    global hp, maxhp, damage, mana, kasa, czardamage, inp
     while True:
-        print("\n--- SKLEP ---")
+        print("--- SKLEP ---")
         print("Twoje złoto:", kasa)
         print("1 - LECZONKOOOOOOO (+30 HP) - 30 zł")
         print("2 - MANAAAAA (+30 manny) - 20 zł")
@@ -126,7 +126,7 @@ def sklep():
         elif wybor == "2":
             if kasa >= 20:
                 kasa -= 20
-                manna += 30
+                mana += 30
                 print("kupiłeś MANAAAAA Mana:", manna)
             else:
                 print("WYPAD BIEDAKU!!!")
@@ -155,7 +155,7 @@ def sklep():
             if kasa >= 100:
                 kasa -= 100
                 hp += 30
-                manna += 30
+                mana += 30
                 if hp > maxhp:
                     hp = maxhp
                 print("zestaw HP:", hp, "Mana:", manna)
@@ -198,7 +198,7 @@ def walka():
         php = wiedzma_hp
         pompa = wiedzma_atak
         drop = wiedzma_dropzłota
-        manna += wiedzma_manna
+        mana += wiedzma_manna
         print("\nWiedźma cię atakuje!")
 
     elif przeciwnik == "paluszki":
@@ -253,21 +253,21 @@ def walka():
             print("krytyczny atak x2 dmg")
 
         if wybor == "a":
-            if manna >= koszt_ataku:
-                manna -= koszt_ataku
+            if mana >= koszt_ataku:
+                mana -= koszt_ataku
                 dmg = damage*2 if kryt == 10 else damage
                 php -= dmg
-                print(f"Zadałeś {dmg} obrażeń (mana: {manna})")
+                print(f"Zadałeś {dmg} obrażeń (mana: {mana})")
             else:
                 print("Nie masz wystarczająco many")
                 continue
 
         elif wybor == "c" and inp in ["a", "e"]:
-            if manna >= koszt_czaru:
-                manna -= koszt_czaru
+            if mana >= koszt_czaru:
+                mana -= koszt_czaru
                 dmg = czardamage*2 if kryt == 10 else czardamage
                 php -= dmg
-                print(f"Rzuciłeś czar Zadajesz {dmg} DMG (mana: {manna})")
+                print(f"Rzuciłeś czar Zadajesz {dmg} DMG (mana: {mana})")
             else:
                 print("Za mało many na czar")
                 continue
@@ -293,14 +293,14 @@ def walka():
         print("\nPRZEGRAŁES LMAO")
         exit()
 
-    print("\nPokonałeś wroga")
+    print("Pokonałeś wroga")
     kasa += drop
     print("Zdobyłeś", drop, "złota")
 
 
 # LOSOWE WYDARZENIA
 def wydarzenia():
-    global hp, manna, kasa
+    global hp, mana, kasa
     los = random.randint(1, 7)
     if los == 1:
         print("\nspolondrowałes grobowiec jak zbok +50 złota")
@@ -312,7 +312,7 @@ def wydarzenia():
             hp = 0
     elif los == 3:
         print("\nmyjesz się i zdobywasz 20 many")
-        manna += 20
+        mana += 20
     elif los == 4:
         print("\nprzeczytałes list ze masz raka -20 HP")
         hp -= 20
@@ -334,7 +334,7 @@ def wydarzenia():
 
 # MENU
 while True:
-    print("\n--- MENU ---")
+    print("--- MENU ---")
     print("a - walka")
     print("b - sklep")
     print("c - statystyki")
@@ -347,11 +347,11 @@ while True:
     elif wybor == "b":
         sklep()
     elif wybor == "c":
-        print("\n--- STATYSTYKI ---")
+        print("--- STATYSTYKI ---")
         print("HP:", hp, "/", maxhp)
         print("DMG:", damage)
         print("DMG czaru:", czardamage if inp in ["a", "e"] else "Brak")
-        print("Mana:", manna)
+        print("Mana:", mana)
         print("Złoto:", kasa)
     elif wybor == "d":
         wydarzenia()
