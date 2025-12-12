@@ -16,7 +16,7 @@ mahomed_dropzłota = -30
 wiedzma_hp = 75
 wiedzma_atak = 25
 wiedzma_dropzłota = 50
-wiedzma_mana = -40
+wiedzma_manna = -40
 
 paluszki_hp = 100
 paluszki_atak = 100
@@ -198,7 +198,7 @@ def walka():
         php = wiedzma_hp
         pompa = wiedzma_atak
         drop = wiedzma_dropzłota
-        mana += wiedzma_mana
+        mana += wiedzma_manna  # <-- poprawka
         print("Wiedźma cię atakuje!")
 
     elif przeciwnik == "paluszki":
