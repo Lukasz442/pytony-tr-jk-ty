@@ -1,6 +1,5 @@
 import random
 
-# PRZECIWNICY
 UDAgotki_hp = 30
 Udagotki_atak = 30
 Udagotki_dropzłota = 300
@@ -39,7 +38,6 @@ tajemniczaistota_hp = 120
 tajemniczaistota_atak = 35
 tajemniczaistota_drop = 100
 
-# POSTACIE
 print(''' 
 Wybierz postać:
 a - elf
@@ -97,7 +95,6 @@ else:
     mana = 200
     czardamage = 60
 
-# SKLEP
 def sklep():
     global hp, maxhp, damage, mana, kasa, czardamage, inp
     while True:
@@ -121,7 +118,7 @@ def sklep():
                     hp = maxhp
                 print("kupiłeś LECZONKOOOOOOO HP:", hp)
             else:
-                print("WYPAD BIEDAKU!!!")
+                print("WYPAD BIEDAKU")
 
         elif wybor == "2":
             if kasa >= 20:
@@ -129,7 +126,7 @@ def sklep():
                 mana += 30
                 print("kupiłeś MANAAAAA Mana:", mana)
             else:
-                print("WYPAD BIEDAKU!!!")
+                print("WYPAD BIEDAKU")
 
         elif wybor == "3":
             if kasa >= 50:
@@ -137,7 +134,7 @@ def sklep():
                 damage += 5
                 print("kupiłeś DAMAGEEEE Nowy DMG:", damage)
             else:
-                print("WYPAD BIEDAKU!!!")
+                print("WYPAD BIEDAKU")
 
         elif wybor == "4" and inp in ["a", "e"]:
             if kasa >= 70:
@@ -145,7 +142,7 @@ def sklep():
                 czardamage += 20
                 print("kupiłeś CZAR DAMAGEEEE Nowy DMG czaru:", czardamage)
             else:
-                print("WYPAD BIEDAKU!!!")
+                print("WYPAD BIEDAKU")
 
         elif wybor == "5":
             print("Wychodzisz pokornie ze sklepu")
@@ -160,17 +157,15 @@ def sklep():
                     hp = maxhp
                 print("zestaw HP:", hp, "Mana:", mana)
             else:
-                print("WYPAD BIEDAKU!!!")
+                print("WYPAD BIEDAKU")
 
         else:
             print("Zły wybór!")
 
-# LOSOWANIE PRZECIWNIKA
 def losuj_przeciwnika():
     przeciwnicy = ["udagotek", "blazej", "mahomed", "wiedzma", "paluszki", "dawid", "robot", "goblin", "troll"]
     return random.choice(przeciwnicy)
 
-# WALKA
 def walka():
     global hp, kasa, damage, mana, inp, czardamage
 
@@ -246,7 +241,7 @@ def walka():
         if inp in ["a", "e"]:
             print("c - czar (koszt 20 many)")
 
-        wybor = input("WHAT ARE YOU DOING SON ?! ")
+        wybor = input("co robisz")
 
         kryt = random.randint(1, 10)
         if kryt == 10:
@@ -298,12 +293,11 @@ def walka():
     print("Zdobyłeś", drop, "złota")
 
 
-# LOSOWE WYDARZENIA
 def wydarzenia():
     global hp, mana, kasa
     los = random.randint(1, 7)
     if los == 1:
-        print("spolondrowałes grobowiec jak zbok +50 złota")
+        print("spolondrowałes grobowiec +50 złota")
         kasa += 50
     elif los == 2:
         print("wyjebałeś się jak przegryw i straciłeś 10 HP")
@@ -332,7 +326,7 @@ def wydarzenia():
             czardamage += 10
 
 
-# MENU
+
 while True:
     print("--- MENU ---")
     print("a - walka")
@@ -340,7 +334,7 @@ while True:
     print("c - statystyki")
     print("d - cos losowego XD")
     print("e - zakończ grę")
-    wybor = input("WHAT ARE YOU GOING TO DO SON ?! ")
+    wybor = input("co robisz")
 
     if wybor == "a":
         walka()
