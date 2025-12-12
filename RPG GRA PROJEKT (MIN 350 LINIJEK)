@@ -104,7 +104,7 @@ def sklep():
         print("--- SKLEP ---")
         print("Twoje złoto:", kasa)
         print("1 - LECZONKOOOOOOO (+30 HP) - 30 zł")
-        print("2 - MANAAAAA (+30 manny) - 20 zł")
+        print("2 - MANAAAAA (+30 many) - 20 zł")
         print("3 - DAMAGEEEE (+5 DMG) - 50 zł")
         if inp in ["a", "e"]:
             print("4 - DAMAGEEEEE CZARU (+20 DMG do czaru) - 70 zł")
@@ -127,7 +127,7 @@ def sklep():
             if kasa >= 20:
                 kasa -= 20
                 mana += 30
-                print("kupiłeś MANAAAAA Mana:", manna)
+                print("kupiłeś MANAAAAA Mana:", mana)
             else:
                 print("WYPAD BIEDAKU!!!")
 
@@ -158,7 +158,7 @@ def sklep():
                 mana += 30
                 if hp > maxhp:
                     hp = maxhp
-                print("zestaw HP:", hp, "Mana:", manna)
+                print("zestaw HP:", hp, "Mana:", mana)
             else:
                 print("WYPAD BIEDAKU!!!")
 
@@ -172,7 +172,7 @@ def losuj_przeciwnika():
 
 # WALKA
 def walka():
-    global hp, kasa, damage, manna, inp, czardamage
+    global hp, kasa, damage, mana, inp, czardamage
 
     przeciwnik = losuj_przeciwnika()
 
@@ -180,58 +180,58 @@ def walka():
         php = UDAgotki_hp
         pompa = Udagotki_atak
         drop = Udagotki_dropzłota
-        print("\nUdagotki cię atakują!")
+        print("Udagotki cię atakują!")
 
     elif przeciwnik == "blazej":
         php = Błażej_hp
         pompa = Błażej_atak
         drop = Błażej_dropzłota
-        print("\nBłażej cię atakuje!")
+        print("Błażej cię atakuje!")
 
     elif przeciwnik == "mahomed":
         php = mahomed_hp
         pompa = mahomed_atak
         drop = mahomed_dropzłota
-        print("\nMahomed cię atakuje!")
+        print("Mahomed cię atakuje!")
 
     elif przeciwnik == "wiedzma":
         php = wiedzma_hp
         pompa = wiedzma_atak
         drop = wiedzma_dropzłota
-        mana += wiedzma_manna
-        print("\nWiedźma cię atakuje!")
+        mana += wiedzma_mana
+        print("Wiedźma cię atakuje!")
 
     elif przeciwnik == "paluszki":
         php = paluszki_hp
         pompa = paluszki_atak
         drop = paluszki_dropzłota
-        print("\nJESTEM PALUSZKI SOLONE! NIE POKONASZ MNIE ÓJÓ GARBATY!")
+        print("JESTEM PALUSZKI SOLONE! NIE POKONASZ MNIE ÓJÓ GARBATY!")
 
     elif przeciwnik == "dawid":
         php = dawid_hp
         pompa = dawid_atak
         drop = dawid_drop
-        print("\ndawid cię atakuje!")
+        print("dawid cię atakuje!")
 
     elif przeciwnik == "transformers":
         php = transformers_hp
         pompa = transformers_atak
         drop = transformers_drop
-        print("\ntransformers cię atakuje!")
+        print("transformers cię atakuje!")
 
     elif przeciwnik == "goblin":
         php = goblin_hp
         pompa = goblin_atak
         drop = goblin_drop
-        print("\ngoblin cię atakuje!")
+        print("goblin cię atakuje!")
 
     elif przeciwnik == "tajemniczaistota":
         php = tajemniczaistota_hp
         pompa = tajemniczaistota_atak
         drop = tajemniczaistota_drop
-        print("\ntajemniczaistota cię atakuje!")
+        print("tajemniczaistota cię atakuje!")
 
-    print(f"\n{przeciwnik.upper()} ma {php} HP i zadaje {pompa} dmg!")
+    print(f"{przeciwnik.upper()} ma {php} HP i zadaje {pompa} dmg!")
 
     koszt_ataku = 10
     koszt_czaru = 20
@@ -239,7 +239,7 @@ def walka():
     while php > 0 and hp > 0:
         print("\n--- WALKA ---")
         print("Twoje HP:", hp)
-        print("Twoja MANA:", manna)
+        print("Twoja MANA:", mana)
         print("HP przeciwnika:", php)
         print("\na - atak (koszt 10 many)")
         print("b - ucieczka")
@@ -267,7 +267,7 @@ def walka():
                 mana -= koszt_czaru
                 dmg = czardamage*2 if kryt == 10 else czardamage
                 php -= dmg
-                print(f"Rzuciłeś czar Zadajesz {dmg} DMG (mana: {mana})")
+                print(f"ruciłeś czar Zadajesz {dmg} DMG (mana: {mana})")
             else:
                 print("Za mało many na czar")
                 continue
@@ -290,10 +290,10 @@ def walka():
             print(f"Przeciwnik zadał {pompa} obrażeń")
 
     if hp <= 0:
-        print("\nPRZEGRAŁES LMAO")
+        print("PRZEGRAŁES")
         exit()
 
-    print("Pokonałeś wroga")
+    print("pokonałeś wroga")
     kasa += drop
     print("Zdobyłeś", drop, "złota")
 
@@ -303,31 +303,31 @@ def wydarzenia():
     global hp, mana, kasa
     los = random.randint(1, 7)
     if los == 1:
-        print("\nspolondrowałes grobowiec jak zbok +50 złota")
+        print("spolondrowałes grobowiec jak zbok +50 złota")
         kasa += 50
     elif los == 2:
-        print("\nwyjebałeś się jak przegryw i straciłeś 10 HP")
+        print("wyjebałeś się jak przegryw i straciłeś 10 HP")
         hp -= 10
         if hp < 0:
             hp = 0
     elif los == 3:
-        print("\nmyjesz się i zdobywasz 20 many")
+        print("myjesz się i zdobywasz 20 many")
         mana += 20
     elif los == 4:
-        print("\nprzeczytałes list ze masz raka -20 HP")
+        print("przeczytałes list ze masz raka -20 HP")
         hp -= 20
         if hp < 0:
             hp = 0
     elif los == 5:
-        print("\nznalazłes +10 złota")
+        print("znalazłes +10 złota")
         kasa += 10
     elif los == 6:
-        print("\nwypiłes coś podejrzanego (kto wie co to) następna runda +10 HP")
+        print("wypiłes coś podejrzanego (kto wie co to) następna runda +10 HP")
         hp += 10
         if hp > maxhp:
             hp = maxhp
     elif los == 7:
-        print("\nnasłuchałes się phonka - czary +10 DMG")
+        print("nasłuchałes się phonka - czary +10 DMG")
         if inp in ["a", "e"]:
             czardamage += 10
 
