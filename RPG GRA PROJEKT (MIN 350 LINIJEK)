@@ -15,7 +15,7 @@ mahomed_dropzłota = -30
 wiedzma_hp = 75
 wiedzma_atak = 25
 wiedzma_dropzłota = 50
-wiedzma_manna = -40
+wiedzma_mana = -40
 
 paluszki_hp = 100
 paluszki_atak = 100
@@ -24,27 +24,27 @@ paluszki_rozmowa = print("NIE POKONASZ MNIE ÓJÓ GARBATY")
 
 dawid_hp = 200
 dawid_atak = 50
-dawid_drop = 200
+dawid_dropzłota = 200
 
 transformers_hp = 150
 transformers_atak = 40
-transformers_drop = 150
+transformers_dropzłota = 150
 
 goblin_hp = 50
 goblin_atak = 20
-goblin_drop = 25
+goblin_dropzłota = 25
 
 tajemniczaistota_hp = 120
 tajemniczaistota_atak = 35
-tajemniczaistota_drop = 100
+tajemniczaistota_dropzłota = 100
 
-print(''' 
+print(''' 
 Wybierz postać:
 a - elf
 b - wodnik
 c - krasnolud
 d - SUPER_PLEMNICZEK
-e - czarodziej 
+e - czarodziej 
 ''')
 inp = input("Twój wybór: ")
 
@@ -163,7 +163,7 @@ def sklep():
             print("zły wybór")
 
 def losuj_przeciwnika():
-    przeciwnicy = ["udagotek", "blazej", "mahomed", "wiedzma", "paluszki", "dawid", "robot", "goblin", "troll"]
+    przeciwnicy = ["udagotek", "blazej", "mahomed", "wiedzma", "paluszki", "dawid", "transformers", "goblin", "tajemniczaistota"]
     return random.choice(przeciwnicy)
 
 def walka():
@@ -193,7 +193,7 @@ def walka():
         php = wiedzma_hp
         pompa = wiedzma_atak
         drop = wiedzma_dropzłota
-        mana += wiedzma_manna  # <-- poprawka
+        mana += wiedzma_mana
         print("wiedźma cię atakuje!")
 
     elif przeciwnik == "paluszki":
@@ -205,25 +205,25 @@ def walka():
     elif przeciwnik == "dawid":
         php = dawid_hp
         pompa = dawid_atak
-        drop = dawid_drop
+        drop = dawid_dropzłota
         print("dawid cię atakuje!")
 
     elif przeciwnik == "transformers":
         php = transformers_hp
         pompa = transformers_atak
-        drop = transformers_drop
+        drop = transformers_dropzłota
         print("transformers cię atakuje!")
 
     elif przeciwnik == "goblin":
         php = goblin_hp
         pompa = goblin_atak
-        drop = goblin_drop
+        drop = goblin_dropzłota
         print("goblin cię atakuje!")
 
     elif przeciwnik == "tajemniczaistota":
         php = tajemniczaistota_hp
         pompa = tajemniczaistota_atak
-        drop = tajemniczaistota_drop
+        drop = tajemniczaistota_dropzłota
         print("tajemniczaistota cię atakuje!")
 
     print(f"{przeciwnik.upper()} ma {php} HP i zadaje {pompa} dmg!")
@@ -294,7 +294,7 @@ def walka():
 
 
 def wydarzenia():
-    global hp, mana, kasa
+    global hp, mana, kasa, czardamage
     los = random.randint(1, 7)
     if los == 1:
         print("spolondrowałes grobowiec +50 złota")
@@ -324,7 +324,6 @@ def wydarzenia():
         print("nasłuchałes się phonka - czary +10 DMG")
         if inp in ["a", "e"]:
             czardamage += 10
-
 
 
 while True:
