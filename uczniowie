@@ -1,61 +1,258 @@
 import os
 import time
 
+baza = []
+kolejne_id = 1
 
-loaded_data = []
-
-
-def program_menu():
+# ================= MENU =================
+def menu_programu():
     print("""
-============================================
-
-e - exit
-w - add user
-r - data info
-
-============================================
+a - dodaj
+b - pokaż dane
+c - liczba użytkowników
+d - znajdź po ID
+e - znajdź po imieniu
+f - usuń
+g - aktualizuj imie
+h - oceny
+i - wyjście
 """)
 
+# ================= DODAWANIE =================
+def dodaj_uzytkownika(baza):
+    global kolejne_id
 
-def add_new_user(data):
-    name = input("Name: ")
-    age = input("Age: ")
+    imie = input("Imie: ")
+    nazwisko = input("Nazwisko: ")
+    data_urodzenia = input("Data urodzenia: ")
 
-    return {"name": name, "age": age}
+    if czy_zajete(baza, imie, nazwisko):
+        print("juz istnieje taki uzytkownik")
+        return None
+
+    user = {
+        "id": kolejne_id,
+        "imie": imie,
+        "nazwisko": nazwisko,
+        "urodziny": data_urodzenia,
+        "matematyka": [],
+        "polski": [],
+        "angielski": []
+    }
+
+    kolejne_id += 1
+    return user
+
+# ================= FUNKCJE =================
+# 1
+def znajdz_uzytkownika_po_id(baza, user_id):
+    for uzytkownik in baza:
+        if uzytkownik["id"] == user_id:
+            return uzytkownik
+    return None
 
 
-def print_all_data(data):
-    if not data:
-        print("No data")
+# 2
+def znajdz_uzytkownikow_po_imieniu(baza, imie):
+    wynik = []
+    for uzytkownik in baza:
+        if uzytkownik["imie"] == imie:
+            wynik.append(uzytkownik)
+    return wynik
+
+
+# 3
+def usun_uzytkownika_po_id(baza, user_id):
+    for i in range(len(baza)):            # len liczy ile jest elementów, range robi indeksy 0,1,2...
+        if baza[i]["id"] == user_id:
+            del baza[i]
+            return True
+    return False
+
+
+# 4
+def aktualizuj_imie(baza, user_id, nowe_imie):
+    for uzytkownik in baza:
+        if uzytkownik["id"] == user_id:
+            uzytkownik["imie"] = nowe_imie
+            return True
+    return False
+
+
+# 5
+def aktualizuj_nazwisko(baza, user_id, nowe_nazwisko):
+    for uzytkownik in baza:
+        if uzytkownik["id"] == user_id:
+            uzytkownik["nazwisko"] = nowe_nazwisko
+            return True
+    return False
+
+
+# 6
+def czy_zajete(baza, imie, nazwisko):
+    for uzytkownik in baza:
+        if uzytkownik["imie"] == imie and uzytkownik["nazwisko"] == nazwisko:
+            return True
+    return False
+
+
+# 7
+def pokaz_uzytkownika(uzytkownik):
+    print("ID:", uzytkownik["id"])
+    print("Imię:", uzytkownik["imie"], uzytkownik["nazwisko"])
+    print("Data:", uzytkownik["urodziny"])
+    print("Matematyka:", uzytkownik["matematyka"])
+    print("Polski:", uzytkownik["polski"])
+    print("Angielski:", uzytkownik["angielski"])
+    print()
+
+
+# 8
+def liczba_uzytkownikow(baza):
+    return len(baza)
+
+
+# 9
+def liczba_bez_imienia(baza):
+    ilosc = 0
+    for uzytkownik in baza:
+        if not uzytkownik["imie"]:
+            ilosc += 1
+    return ilosc
+
+
+# 10
+def srednia(lista):
+    if len(lista) == 0:
+        return None
+    return sum(lista) / len(lista)
+
+
+# 11
+def srednia_mat(uzytkownik):
+    return srednia(uzytkownik["matematyka"])
+
+
+# 12
+def srednia_pol(uzytkownik):
+    return srednia(uzytkownik["polski"])
+
+
+# 13
+def srednia_ang(uzytkownik):
+    return srednia(uzytkownik["angielski"])
+
+
+# 14
+def srednia_ogolna(uzytkownik):
+    wszystkie = uzytkownik["matematyka"] + uzytkownik["polski"] + uzytkownik["angielski"]
+    return srednia(wszystkie)
+
+
+# 15
+def najlepszy_uczen(baza, przedmiot):
+    najlepszy = None
+    najlepsza_srednia = -1
+
+    for uzytkownik in baza:
+        oceny = uzytkownik[przedmiot]
+        if oceny:
+            s = srednia(oceny)
+            if s > najlepsza_srednia:
+                najlepsza_srednia = s
+                najlepszy = uzytkownik
+
+    return najlepszy
+
+
+# 16
+def srednia_przedmiotu(baza, przedmiot):
+    wszystkie = []
+    for uzytkownik in baza:
+        wszystkie += uzytkownik[przedmiot]
+
+    return srednia(wszystkie)
+
+# ================= OCENY =================
+def dodaj_lub_usun_oceny(baza):
+    user = znajdz_uzytkownika_po_id(baza, int(input("ID: ")))
+
+    if not user:
+        print("Brak usera")
         return
 
-    for i, user in enumerate(data, 1):
-        print(f"{i}. {user['name']} - {user['age']}")
+    przedmiot = input("matematyka/polski/angielski: ")
 
+    if przedmiot not in ["matematyka", "polski", "angielski"]:
+        print("Błąd")
+        return
+
+    akcja = input("d - dodaj / u - usuń: ")
+
+    if akcja == "d":
+        user[przedmiot].append(float(input("Ocena: ")))
+
+    elif akcja == "u":
+        print(user[przedmiot])
+        val = float(input("Usuń: "))
+        if val in user[przedmiot]:
+            user[przedmiot].remove(val)
+
+
+# ================= MAIN =================
+def pokaz_wszystko(baza):
+    if not baza:
+        print("Brak danych")
+        return
+
+    for uzytkownik in baza:
+        pokaz_uzytkownika(uzytkownik)
 
 def main():
-    global loaded_data
+    global baza
 
     while True:
-        program_menu()
-        inp = input("- ").lower().strip()
+        menu_programu()
+        inp = input(" ")
 
-        if inp == "e":
-            print("The program has finished running")
+        if inp == "i":
+            print("Koniec programu")
             break
 
-        elif inp == "w":
-            new_user = add_new_user(loaded_data)
-            loaded_data.append(new_user)
+        elif inp == "a":
+            nowy = dodaj_uzytkownika(baza)
+            if nowy:
+                baza.append(nowy)
 
-        elif inp == "r":
-            print_all_data(loaded_data)
+        elif inp == "b":
+            pokaz_wszystko(baza)
+
+        elif inp == "c":
+            print("Liczba użytkowników:", liczba_uzytkownikow(baza))
+
+        elif inp == "d":
+            uzytkownik = znajdz_uzytkownika_po_id(baza, int(input("ID: ")))
+            if uzytkownik:
+                pokaz_uzytkownika(uzytkownik)
+
+        elif inp == "e":
+            imie = input("Imię: ")
+            for uzytkownik in znajdz_uzytkownikow_po_imieniu(baza, imie):
+                pokaz_uzytkownika(uzytkownik)
+
+        elif inp == "f":
+            print(usun_uzytkownika_po_id(baza, int(input("ID: "))))
+
+        elif inp == "g":
+            aktualizuj_imie(baza, int(input("ID: ")), input("Nowe imię: "))
+
+        elif inp == "h":
+            dodaj_lub_usun_oceny(baza)
 
         else:
             os.system("cls" if os.name == "nt" else "clear")
-            print("There is no such command")
-            time.sleep(2)
-
+            print("Zła komenda")
+            time.sleep(1)
 
 if __name__ == "__main__":
     main()
