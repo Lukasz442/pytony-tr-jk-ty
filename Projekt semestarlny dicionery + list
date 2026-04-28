@@ -1,5 +1,170 @@
-main.py:
+zrobione : 0 , 1
 
-users.py
+main.py:
+from functions import data
+from functions import users
+import os
+import time 
+
+def program_menu()->None:
+        print(
+    """
+    ================================================
+    \n
+    e - exsit
+    w - add user
+    r - data inf
+    t - add or remove grade
+    y - find user by id
+    \n
+    ================================================
+    """)
+
+
+def main(): 
+    loaded_data:list[dict] = data.read_data()
+    while True:
+        program_menu()
+        inp = input("- ").lower().strip()
+        if inp == "e":
+            print("The program has finished running")
+            data.save_data(loaded_data)
+            break
+        elif inp == "w":
+            new_user = users.add_new_user(loaded_data)
+            loaded_data.append(new_user)
+            data.save_data(loaded_data)
+        elif inp == "r":
+            data.print_all_data(loaded_data)
+        elif inp == "t":
+            users.add_or_remove_grades(loaded_data)
+            data.save_data(loaded_data)
+        elif inp == "y":
+            user_id = int(input("Enter user ID: "))
+            user = users.find_user_by_id(loaded_data, user_id)
+
+            if user:
+                print(user)
+            else:
+                print("User not found")
+        elif inp == "u":
+            pass
+        elif inp == "i":
+            pass
+        elif inp == "o":
+            pass
+        else:
+            os.system("cls" if os.name == "nt" else "clear")
+            print("There is no such command")
+            time.sleep(2)
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
+
+
+
+users.py:
+from random import randint
+
+def generate_unique_id(data: list[dict]) -> int:
+    lst_id = []
+    for user in data:
+        lst_id.append(user.get("id"))
+    new_id = randint(1, 1000000)
+    while new_id in lst_id:
+        new_id = randint(1, 1000000)
+    return new_id
+
+def add_new_user(data: list[dict])-> dict:
+    return {
+        "id": generate_unique_id(data),
+        "name": input("Enter name: ").strip().lower() or None,
+        "surname":input("Enter surname: ").strip().lower() or None,
+        "date of birth":input("date of birth: ").strip().lower() or None,
+        "grades mathematics": [],
+        "grades polish": [], 
+        "grades english":[]        
+    }
+    
+def add_or_remove_grades(data: list[dict]) -> None:
+    if not data:
+        print("No users")
+        return
+
+    i = 0
+    for user in data:
+        print(i, user["name"], user["surname"])
+        i += 1
+
+    index = int(input("Choose user number: "))
+    user = data[index]
+
+    print("m - math | p - polish | e - english")
+    subject = input("Choose subject: ")
+
+    if subject == "m":
+        key = "grades mathematics"
+    elif subject == "p":
+        key = "grades polish"
+    elif subject == "e":
+        key = "grades english"
+    else:
+        print("Wrong subject")
+        return
+
+    print("a - add grade | r - remove grade ")
+    action = input("What you chose: ")
+
+    if action == "a":
+        grade = int(input("Enter grade: "))
+        user[key].append(grade)
+
+    elif action == "r":
+        if not user[key]:
+            print("No grades")
+            return
+
+        i = 0
+        for g in user[key]:
+            print(i, g)
+            i += 1
+
+        g_index = int(input("Which grade remove: "))
+        user[key].pop(g_index)
+
+def find_user_by_id(data: list[dict], user_id: int) -> dict | None:
+    for user in data:
+        if user["id"] == user_id:
+            return user
+    return None
+
+
+
+
+
+
+
 
 data.py:
+import json
+
+def save_data(data):
+    with open("data.json", "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
+
+def read_data():
+    with open("data.json", "r", encoding="utf-8") as file:
+        return json.load(file)
+
+def print_all_data(data:list[dict]):
+    for el in data:
+        print("==="*20)
+        for k,v in el.items():
+            print(f"{k} ----- {v}")
+
