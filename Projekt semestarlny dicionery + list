@@ -1,4 +1,4 @@
-zrobione : 0 , 1
+zrobione : 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10 , 11 , 12 , 13 , 14 , 15 , 16
 
 main.py:
 from functions import data
@@ -16,6 +16,19 @@ def program_menu()->None:
     r - data inf
     t - add or remove grade
     y - find user by id
+    u - find user by name
+    i - delete user by id
+    o - update user name
+    p - update user surname
+    a - update birth date
+    s - show total number of users
+    d - number of missing names 
+    f - show math average
+    g - show polish average
+    h - show english average
+    j - all subjects average
+    k - best student in subject
+    l - subject average from all users
     \n
     ================================================
     """)
@@ -32,27 +45,145 @@ def main():
             break
         elif inp == "w":
             new_user = users.add_new_user(loaded_data)
-            loaded_data.append(new_user)
-            data.save_data(loaded_data)
+            if new_user:
+                loaded_data.append(new_user)
+                data.save_data(loaded_data)
         elif inp == "r":
             data.print_all_data(loaded_data)
         elif inp == "t":
             users.add_or_remove_grades(loaded_data)
             data.save_data(loaded_data)
         elif inp == "y":
-            user_id = int(input("Enter user ID: "))
+            user_id = int(input("Enter user id: "))
             user = users.find_user_by_id(loaded_data, user_id)
-
             if user:
-                print(user)
+                users.show_one_user(user)
             else:
                 print("User not found")
         elif inp == "u":
-            pass
+            user_name = input("Enter user name: ")
+            users_found = users.find_users_by_name(loaded_data, user_name)
+            if users_found:
+                for u in users_found:
+                    print(u)
+            else:
+                print("User not found") 
         elif inp == "i":
-            pass
+            user_id = int(input("Enter user id to delete: "))
+            deleted = users.delete_user_by_id(loaded_data, user_id)
+
+            if deleted:
+                print("User deleted")
+                data.save_data(loaded_data)
+            else:
+                print("User not found")  
         elif inp == "o":
-            pass
+            user_id = int(input("Enter user id: "))
+            new_name = input("Enter new name: ")
+
+            updated = users.update_user_name(loaded_data, user_id, new_name)
+
+            if updated:
+                print("Name updated")
+                data.save_data(loaded_data)
+            else:
+                print("User not found")
+        elif inp == "p":
+            user_id = int(input("Enter user id: "))
+            new_surname = input("Enter new surname: ")
+
+            updated = users.update_user_surname(loaded_data, user_id, new_surname)
+
+            if updated:
+                print("Surename updated")
+                data.save_data(loaded_data)
+            else:
+                print("User not found")    
+        elif inp == "a":
+            user_id = int(input("Enter user id: "))
+            new_birth_date = input("Enter new birth date: ")
+
+            updated = users.update_user_birth_date(loaded_data, user_id, new_birth_date)
+
+            if updated:
+                print("Birth date updated")
+                data.save_data(loaded_data)
+            else:
+                print("User not found")            
+        elif inp == "s":
+            count = users.count_all_users(loaded_data)
+            print("Total users:", count)        
+        elif inp == "d":
+            count = users.count_users_with_missing_name(loaded_data)
+            print("Users with missing name:", count)                           
+        elif inp == "f":
+            user_id = int(input("Enter user id: "))
+            user = users.find_user_by_id(loaded_data, user_id)
+
+            if user:
+                avg = users.average_math_for_user(user)
+
+                if avg is None:
+                    print("No math grades")
+                else:
+                    print("Math average:", avg)
+            else:
+                print("User not found")     
+        elif inp == "g":
+            user_id = int(input("Enter user id: "))
+            user = users.find_user_by_id(loaded_data, user_id)
+
+            if user:
+                avg = users.average_polish_for_user(user)
+
+                if avg is None:
+                    print("No polish grades")
+                else:
+                    print("Polish average:", avg)
+            else:
+                print("User not found")      
+        elif inp == "h":
+            user_id = int(input("Enter user id: "))
+            user = users.find_user_by_id(loaded_data, user_id)
+
+            if user:
+                avg = users.average_english_for_user(user)
+
+                if avg is None:
+                    print("No english grades")
+                else:
+                    print("English average:", avg)
+            else:
+                print("User not found")  
+        elif inp == "j":
+            user_id = int(input("Enter user id: "))
+            user = users.find_user_by_id(loaded_data, user_id)
+
+            if user:
+                avg = users.all_subject_average_for_user(user)
+
+                if avg is None:
+                    print("No grades")
+                else:
+                    print("All subject average:", avg)
+            else:
+                print("User not found")   
+        elif inp == "k":
+            subject = input("Choose subject (m - mathematics | p - polish | e - english): ")
+            user = users.best_student_in_subject(loaded_data, subject)
+
+            if user:
+                users.show_one_user(user)
+            else:
+                print("No students found for this subject")
+        elif inp == "l":
+            subject = input("Choose subject (m - mathematics | p - polish | e- english): ")
+            avg = users.subject_average_for_all_users(loaded_data, subject)
+
+            if avg is None:
+                print("No grades found")
+            else:
+                print("Subject average:", avg)                
         else:
             os.system("cls" if os.name == "nt" else "clear")
             print("There is no such command")
@@ -68,9 +199,13 @@ if __name__ == '__main__':
 
 
 
-
 users.py:
 from random import randint
+def is_name_taken(data: list[dict], name: str, surname: str) -> bool:
+    for user in data:
+        if user["name"] == name and user["surname"] == surname:
+            return True
+    return False
 
 def generate_unique_id(data: list[dict]) -> int:
     lst_id = []
@@ -81,15 +216,22 @@ def generate_unique_id(data: list[dict]) -> int:
         new_id = randint(1, 1000000)
     return new_id
 
-def add_new_user(data: list[dict])-> dict:
+def add_new_user(data: list[dict]) -> dict | None:
+    name = input("Enter name: ")
+    surname = input("Enter surname: ")
+
+    if is_name_taken(data, name, surname):
+        print("User already exists")
+        return None
+
     return {
         "id": generate_unique_id(data),
-        "name": input("Enter name: ").strip().lower() or None,
-        "surname":input("Enter surname: ").strip().lower() or None,
-        "date of birth":input("date of birth: ").strip().lower() or None,
+        "name": name,
+        "surname": surname,
+        "date of birth": input("date of birth: "),
         "grades mathematics": [],
-        "grades polish": [], 
-        "grades english":[]        
+        "grades polish": [],
+        "grades english": []
     }
     
 def add_or_remove_grades(data: list[dict]) -> None:
@@ -144,6 +286,152 @@ def find_user_by_id(data: list[dict], user_id: int) -> dict | None:
             return user
     return None
 
+def find_users_by_name(data: list[dict], name: str) -> list[dict]:
+    result = []
+
+    for user in data:
+        if user["name"] == name:
+            result.append(user)
+
+    return result
+
+def delete_user_by_id(data: list[dict], user_id: int) -> bool:
+    for user in data:
+        if user["id"] == user_id:
+            data.remove(user)
+            return True
+    return False
+
+def update_user_name(data: list[dict], user_id: int, new_name: str) -> bool:
+    for user in data:
+        if user["id"] == user_id:
+            user["name"] = new_name
+            return True
+    return False
+
+def update_user_surname(data: list[dict], user_id: int, new_surname: str) -> bool:
+    for user in data:
+        if user["id"] == user_id:
+            user["surname"] = new_surname
+            return True
+    return False
+
+def update_user_birth_date(data: list[dict], user_id: int, new_birth_date: str) -> bool:
+    for user in data:
+        if user["id"] == user_id:
+            user["date of birth"] = new_birth_date
+            return True
+    return False
+
+def show_one_user(user: dict) -> None:
+    print("\n================ONE USER INFORMATIONS================")
+    print("ID:", user["id"])
+    print("Name:", user["name"])
+    print("Surname:", user["surname"])
+    print("Date of birth:", user["date of birth"])
+
+    print("\nGrades:")
+    print("Math:", user["grades mathematics"])
+    print("Polish:", user["grades polish"])
+    print("English:", user["grades english"])
+
+    print("===========================================\n")
+
+def count_all_users(data: list[dict]) -> int:
+    return len(data)    
+
+def count_users_with_missing_name(data: list[dict]) -> int:
+    count = 0
+
+    for user in data:
+        if user["name"] is None or user["name"] == "":
+            count += 1
+
+    return count
+
+def average_math_for_user(user: dict) -> float | None:
+    grades = user["grades mathematics"]
+
+    if not grades:
+        return None
+
+    return sum(grades) / len(grades)
+
+def average_polish_for_user(user: dict) -> float | None:
+    grades = user["grades polish"]
+
+    if not grades:
+        return None
+
+    return sum(grades) / len(grades)
+
+def average_english_for_user(user: dict) -> float | None:
+    grades = user["grades english"]
+
+    if not grades:
+        return None
+
+    return sum(grades) / len(grades)
+
+def all_subject_average_for_user(user: dict) -> float | None:
+    all_grades = (
+        user["grades mathematics"] +
+        user["grades polish"] +
+        user["grades english"]
+    )
+
+    if not all_grades:
+        return None
+
+    return sum(all_grades) / len(all_grades)
+
+def best_student_in_subject(data: list[dict], subject: str) -> dict | None:
+    if subject == "m":
+        key = "grades mathematics"
+    elif subject == "p":
+        key = "grades polish"
+    elif subject == "e":
+        key = "grades english"
+    else:
+        return None
+
+    best_user = None
+    best_avg = None
+
+    for user in data:
+        grades = user[key]
+
+        if not grades:
+            continue
+
+        avg = sum(grades) / len(grades)
+
+        if best_avg is None or avg > best_avg:
+            best_avg = avg
+            best_user = user
+
+    return best_user
+
+def subject_average_for_all_users(data: list[dict], subject: str) -> float | None:
+    if subject == "m":
+        key = "grades mathematics"
+    elif subject == "p":
+        key = "grades polish"
+    elif subject == "e":
+        key = "grades english"
+    else:
+        return None
+
+    all_grades = []
+
+    for user in data:
+        all_grades += user[key]
+
+    if not all_grades:
+        return None
+
+    return sum(all_grades) / len(all_grades)
+
 
 
 
@@ -167,4 +455,6 @@ def print_all_data(data:list[dict]):
         print("==="*20)
         for k,v in el.items():
             print(f"{k} ----- {v}")
+
+
 
