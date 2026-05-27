@@ -1,1 +1,270 @@
+main.py:
 
+
+
+data.py:
+ENEMIES = {
+    
+    "dwarf": {
+        "hp": 100,
+        "damage": 25,
+        "mana": 50,
+        "gold_drop": 30,
+        "crit_damage": 35,
+
+        "crit_chance": 20,
+        "heal_chance": 20,
+        "heal_amount": 25
+
+    },    
+    
+    "angel": {
+        "hp": 250,
+        "damage": 5,
+        "mana": 0,
+        "gold_drop": 0,
+        "crit_damage": 50,
+
+        "crit_chance": 50,
+        "heal_chance": 5,
+        "heal_amount": 100
+    },
+
+    "goblin": {
+        "hp": 50,
+        "damage": 10,
+        "mana": 10,
+        "gold_drop": 60,
+        "crit_damage": 0,
+
+        "crit_chance": 0,
+        "heal_chance": 0,
+        "heal_amount": 0,
+        "steal_gold_chanche": 35 #steals 100 gols usualy
+    },
+
+    "zombie": {
+        "hp": 100,
+        "damage": 25,
+        "mana": 0,
+        "gold_drop": 20,
+        "crit_damage": 35,
+
+        "crit_chance": 20,
+        "heal_chance": 0,
+        "heal_amount": 0,
+        "bite/poison_you": 35 #buy zombie bite medicine
+    },
+
+    "vampire": {
+        "hp": 200,
+        "damage": 50,
+        "mana": 50,
+        "gold_drop": 30,
+        "crit_damage": 80,
+
+        "crit_chance": 20,
+        "heal_chance": 35,
+        "heal_amount": 30,
+        "hypnotize": 20
+    },
+
+    "drowned": {
+        "hp": 150,
+        "damage": 30,
+        "mana": 10,
+        "gold_drop": 0,
+        "crit_damage": 45,
+
+        "crit_chance": 20,
+        "heal_chance": 5,
+        "heal_amount": 10,
+    },    
+
+    "demon": {
+        "hp": 300,
+        "damage": 70,
+        "mana": 100,
+        "gold_drop": 100,
+        "crit_damage": 120,
+
+        "crit_chance": 30,
+        "heal_chance": 0,
+        "heal_amount": 0,
+        "burn_you": 40
+    },
+
+    "necromancer": {
+        "hp": 120,
+        "damage": 20,
+        "mana": 200,
+        "gold_drop": 90,
+        "crit_damage": 50,
+
+        "crit_chance": 10,
+        "heal_chance": 20,
+        "heal_amount": 20,
+        "summon_zombie": 25
+    },
+
+    "wizard": {
+        "hp": 120,
+        "damage": 0,
+        "mana": 300,
+        "gold_drop": 40,
+        "crit_damage": 50,
+
+        "crit_chance": 20,
+        "heal_chance": 30,
+        "heal_amount": 25,
+    },
+
+#pseudo boss
+
+    "skeleton_king": {
+        "hp": 300,
+        "damage": 50,
+        "mana": 0,
+        "gold_drop": 50,
+        "crit_damage": 100,
+
+        "crit_chance": 25,
+        "heal_chance": 25,
+        "heal_amount": 50,
+        "block_attack": 30,
+        "summon_skeleton": 25
+    },
+
+    "skeleton": {
+        "hp": 25,
+        "damage": 30,
+        "mana": 0,
+        "gold_drop": 0,
+        "crit_damage": 0,
+
+        "crit_chance": 0,
+        "heal_chance": 0,
+        "heal_amount": 0,
+    }        
+
+
+}
+
+CHARACTERS = {
+
+    "knight": {
+        "hp": 200,
+        "damage": 50,
+        "mana": 30,
+        "crit_damage": 80,
+
+        "crit_chance": 15,
+        "heal_chance": 10,
+        "heal_amount": 20,
+
+        "block_chance": 25
+    },
+
+    "elf": {
+        "hp": 110,
+        "damage": 25,
+        "mana": 200,
+        "crit_damage": 0,
+
+        "crit_chance": 30,
+        "heal_chance": 10,
+        "heal_amount": 15,
+
+        "magic_bonus": 20
+    },
+
+    "human_on_steroids": {
+        "hp": 100,
+        "damage": 40,
+        "mana": 40,
+        "crit_damage": 1000,
+
+        "crit_chance": 5,
+        "heal_chance": 20,
+        "heal_amount": 25,
+
+        "resistance": 20
+    },
+
+    "assassin": {
+        "hp": 100,
+        "damage": 50,
+        "mana": 60,
+        "crit_damage": 150,
+
+        "crit_chance": 45,
+        "heal_chance": 5,
+        "heal_amount": 10,
+
+        "dodge_chance": 40
+    },
+
+    "mage": {
+        "hp": 90,
+        "damage": 20,
+        "mana": 300,
+        "crit_damage": 30,
+
+        "crit_chance": 25,
+        "heal_chance": 25,
+        "heal_amount": 20,
+    }  
+
+
+}
+
+BOSSES = {
+
+    "dragon": {
+        "hp": 600,
+        "damage": 90,
+        "mana": 150,
+        "gold_drop": 500,
+
+        "crit_chance": 30,
+        "heal_chance": 10,
+        "heal_amount": 60,
+
+        "fire_breath": 50,
+        "armor": 20
+    },
+
+    "soul_eater": {
+        "hp": 500,
+        "damage": 70,
+        "mana": 200,
+        "gold_drop": 700,
+
+        "crit_chance": 35,
+        "heal_chance": 25,
+        "heal_amount": 40,
+
+        "life_steal": 40,
+        "fear_effect": 25
+    },
+
+    "god": {
+        "hp": 1200,
+        "damage": 120,
+        "mana": 500,
+        "gold_drop": 2000,
+
+        "crit_chance": 50,
+        "heal_chance": 40,
+        "heal_amount": 100,
+
+        "divine_strike": 60,
+        "immortality_phase": 20
+    }
+
+    
+}
+
+
+
+mechanics.py:
