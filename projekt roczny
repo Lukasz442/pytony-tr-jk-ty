@@ -1,4 +1,135 @@
 main.py:
+from data import CHARACTERS
+import random
+from data import ENEMIES
+
+
+print("Chose class:")
+for name in CHARACTERS:
+    print(name)
+
+choice = input("- ")
+
+player = CHARACTERS[choice].copy()
+
+print("You chosed:", choice)
+
+print("----------------")
+
+while True:
+
+    option = input(
+        "---MENU---\n"
+        "1 find enemy\n"
+        "2 shop\n"
+        "3 exit\n"
+    )
+
+    print("----------------")
+
+    if option == "1":
+
+        enemy_name = random.choice(list(ENEMIES))
+        enemy = ENEMIES[enemy_name].copy()
+
+        print("Fight against:", enemy_name)
+        print("----------------")
+
+        while player["hp"] > 0 and enemy["hp"] > 0:
+
+            print("Your HP:", player["hp"])
+            print("Enemy HP:", enemy["hp"])
+            print("----------------")
+
+            action = input(
+                "a attack\n"
+                "b rest\n"
+                "c potion\n"
+                "d run\n"
+            )
+
+            print("----------------")
+
+            if action == "a":
+
+                crit = random.randint(1, 100)
+
+                damage = player["damage"]
+
+                if crit <= player.get("crit_chance", 0):
+                    damage = player.get("crit_damage", damage * 2)
+                    print("you landed crit")
+
+                enemy["hp"] -= damage
+                print("You deal", damage)
+
+                print("----------------")
+
+            elif action == "b":
+
+                player["hp"] += 10
+                print("rest +10hp")
+
+                print("----------------")
+
+            elif action == "c":
+
+                print("potions not ready")
+
+                print("----------------")
+
+            elif action == "d":
+
+                print("run")
+                print("----------------")
+                break
+
+            else:
+                print("wrong")
+                print("----------------")
+                continue
+
+            if enemy["hp"] > 0:
+
+                heal_roll = random.randint(1, 100)
+
+                if heal_roll <= enemy.get("heal_chance", 0):
+                    enemy["hp"] += enemy.get("heal_amount", 10)
+                    print("enemy heal")
+
+                crit_roll = random.randint(1, 100)
+
+                enemy_damage = enemy["damage"]
+
+                if crit_roll <= enemy.get("crit_chance", 0):
+                    enemy_damage = enemy.get("crit_damage", enemy_damage * 2)
+                    print("enemy landed crit")
+
+                player["hp"] -= enemy_damage
+
+                print("enemy hit", enemy_damage)
+
+                print("----------------")
+
+        if enemy["hp"] <= 0:
+            print("you won")
+
+        if player["hp"] <= 0:
+            print("you died")
+            break
+
+    elif option == "2":
+        print("shop not done")
+
+    elif option == "3":
+        print("you runned away")
+        break
+
+    else:
+        print("wrong option")
+
+
+
 
 
 
