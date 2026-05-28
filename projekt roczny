@@ -1,16 +1,22 @@
-main.py:
+main.py
 from data import CHARACTERS
-import random
 from data import ENEMIES
+from data import BOSSES
+from huj import shop
+
+import random
 
 
 print("Chose class:")
+
 for name in CHARACTERS:
     print(name)
 
 choice = input("- ")
 
 player = CHARACTERS[choice].copy()
+
+player["gold"] = 100
 
 print("You chosed:", choice)
 
@@ -21,8 +27,9 @@ while True:
     option = input(
         "---MENU---\n"
         "1 find enemy\n"
-        "2 shop\n"
-        "3 exit\n"
+        "2 boss fight\n"
+        "3 shop\n"
+        "4 exit\n"
     )
 
     print("----------------")
@@ -32,43 +39,96 @@ while True:
         enemy_name = random.choice(list(ENEMIES))
         enemy = ENEMIES[enemy_name].copy()
 
+        extra_enemy = None
+
         print("Fight against:", enemy_name)
+
         print("----------------")
 
-        while player["hp"] > 0 and enemy["hp"] > 0:
+        while player["hp"] > 0 and (
+            enemy["hp"] > 0 or
+            (extra_enemy and extra_enemy["hp"] > 0)
+        ):
 
             print("Your HP:", player["hp"])
-            print("Enemy HP:", enemy["hp"])
+            print("Your Mana:", player["mana"])
+            print("Your Gold:", player["gold"])
+
+            if enemy["hp"] > 0:
+                print(enemy_name, "HP:", enemy["hp"])
+
+            if extra_enemy and extra_enemy["hp"] > 0:
+                print(extra_enemy_name, "HP:", extra_enemy["hp"])
+
             print("----------------")
 
-            action = input(
-                "a attack\n"
-                "b rest\n"
-                "c potion\n"
-                "d run\n"
-            )
+            if player.get("skip_turn", False):
+
+                print("you are hypnotized")
+                print("turn skipped")
+
+                player["skip_turn"] = False
+
+                print("----------------")
+
+                action = ""
+
+            else:
+
+                action = input(
+                    "a attack\n"
+                    "b rest\n"
+                    "c potion\n"
+                    "d run\n"
+                )
 
             print("----------------")
 
             if action == "a":
 
-                crit = random.randint(1, 100)
+                if player["mana"] >= 10:
+                    player["mana"] -= 10
+                    crit = random.randint(1, 100)
 
-                damage = player["damage"]
+                    damage = player["damage"]
 
-                if crit <= player.get("crit_chance", 0):
-                    damage = player.get("crit_damage", damage * 2)
-                    print("you landed crit")
+                    if player.get("crit_chance", 0) > 0:
 
-                enemy["hp"] -= damage
-                print("You deal", damage)
+                        if crit <= player["crit_chance"]:
+
+                            damage = player["crit_damage"]
+
+                            print("you landed crit")
+
+                    target = input(
+                        "1 main enemy\n"
+                        "2 second enemy\n"
+                    )
+
+                    print("----------------")
+
+                    if target == "2" and extra_enemy and extra_enemy["hp"] > 0:
+
+                        extra_enemy["hp"] -= damage
+
+                        print("You deal", damage, "to", extra_enemy_name)
+
+                    else:
+
+                        enemy["hp"] -= damage
+
+                        print("You deal", damage, "to", enemy_name)
+                else:
+                    print("not enough mana!")
 
                 print("----------------")
 
             elif action == "b":
 
-                player["hp"] += 10
-                print("rest +10hp")
+                player["hp"] += 20
+                player["mana"] += 30
+
+                print("rest +20hp +30mana")
 
                 print("----------------")
 
@@ -81,12 +141,21 @@ while True:
             elif action == "d":
 
                 print("run")
+
                 print("----------------")
+
                 break
 
+            elif action == "":
+
+                pass
+
             else:
+
                 print("wrong")
+
                 print("----------------")
+
                 continue
 
             if enemy["hp"] > 0:
@@ -94,40 +163,366 @@ while True:
                 heal_roll = random.randint(1, 100)
 
                 if heal_roll <= enemy.get("heal_chance", 0):
+
                     enemy["hp"] += enemy.get("heal_amount", 10)
+
                     print("enemy heal")
+
+                    print("----------------")
 
                 crit_roll = random.randint(1, 100)
 
                 enemy_damage = enemy["damage"]
 
-                if crit_roll <= enemy.get("crit_chance", 0):
-                    enemy_damage = enemy.get("crit_damage", enemy_damage * 2)
-                    print("enemy landed crit")
+                if enemy.get("crit_chance", 0) > 0:
+
+                    if crit_roll <= enemy["crit_chance"]:
+
+                        enemy_damage = enemy["crit_damage"]
+
+                        print("enemy landed crit")
+
+                        print("----------------")
+
+                if enemy_name == "goblin":
+
+                    steal_roll = random.randint(1, 100)
+
+                    if steal_roll <= enemy.get("steal_gold_chanche", 0):
+
+                        stolen = min(100, player["gold"])
+
+                        player["gold"] -= stolen
+
+                        print("goblin stole", stolen, "gold")
+
+                        print("----------------")
+
+                if enemy_name == "zombie":
+
+                    poison_roll = random.randint(1, 100)
+
+                    if poison_roll <= enemy.get("bite/poison_you", 0):
+
+                        print("zombie poisoned you")
+
+                        enemy_damage += 15
+
+                        print("----------------")
+
+                if enemy_name == "vampire":
+
+                    hypno_roll = random.randint(1, 100)
+
+                    if hypno_roll <= enemy.get("hypnotize", 0):
+
+                        player["skip_turn"] = True
+
+                        print("vampire hypnotized you")
+                        print("you lose next turn")
+
+                        print("----------------")
+
+                if enemy_name == "demon":
+
+                    burn_roll = random.randint(1, 100)
+
+                    if burn_roll <= enemy.get("burn_you", 0):
+
+                        enemy_damage += 30
+
+                        print("demon burned you")
+
+                        print("----------------")
+
+                if enemy_name == "skeleton_king" and extra_enemy is None:
+
+                    summon_roll = random.randint(1, 100)
+
+                    if summon_roll <= enemy.get("summon_skeleton", 0):
+
+                        extra_enemy_name = "skeleton"
+
+                        extra_enemy = ENEMIES["skeleton"].copy()
+
+                        print("skeleton king summoned skeleton")
+
+                        print("----------------")
+
+                if enemy_name == "necromancer" and extra_enemy is None:
+
+                    summon_roll = random.randint(1, 100)
+
+                    if summon_roll <= enemy.get("summon_zombie", 0):
+
+                        extra_enemy_name = "zombie"
+
+                        extra_enemy = ENEMIES["zombie"].copy()
+
+                        print("necromancer summoned zombie")
+
+                        print("----------------")
 
                 player["hp"] -= enemy_damage
 
-                print("enemy hit", enemy_damage)
+                print(enemy_name, "hit", enemy_damage)
+
+                print("----------------")
+
+            if extra_enemy and extra_enemy["hp"] > 0:
+
+                extra_damage = extra_enemy["damage"]
+
+                player["hp"] -= extra_damage
+
+                print(extra_enemy_name, "hits", extra_damage)
+
+                print("----------------")
+
+            if extra_enemy and extra_enemy["hp"] <= 0:
+
+                print(extra_enemy_name, "died")
+
+                print("----------------")
+
+                extra_enemy = None
+
+            if enemy["hp"] <= 0:
+
+                print(enemy_name, "died")
+
+                print("----------------")
+
+        if enemy["hp"] <= 0 and extra_enemy is None:
+
+            print("you won")
+
+            print("----------------")
+
+        if player["hp"] <= 0:
+
+            print("you died")
+
+            break
+
+    elif option == "2":
+
+        enemy_name = random.choice(list(BOSSES))
+        enemy = BOSSES[enemy_name].copy()
+
+        print("BOSS FIGHT AGAINST:", enemy_name)
+
+        print("----------------")
+
+        while player["hp"] > 0 and enemy["hp"] > 0:
+
+            print("Your HP:", player["hp"])
+            print("Your Mana:", player["mana"])
+            print(enemy_name, "HP:", enemy["hp"])
+
+            print("----------------")
+
+            if player.get("skip_turn", False):
+
+                print("you are hypnotized")
+                print("turn skipped")
+
+                player["skip_turn"] = False
+
+                print("----------------")
+
+                action = ""
+
+            else:
+
+                action = input(
+                    "a attack\n"
+                    "b rest\n"
+                    "c potion\n"
+                    "d run\n"
+                )
+
+            print("----------------")
+
+            if action == "a":
+
+                if player["mana"] >= 10:
+                    player["mana"] -= 10
+                    damage = player["damage"]
+
+                    crit = random.randint(1, 100)
+
+                    if player.get("crit_chance", 0) > 0:
+
+                        if crit <= player["crit_chance"]:
+
+                            damage = player["crit_damage"]
+
+                            print("you landed crit")
+
+                    if enemy_name == "god":
+
+                        immortality_roll = random.randint(1, 100)
+
+                        if immortality_roll <= enemy.get("immortality_phase", 0):
+
+                            damage = 0
+
+                            print("god ignored damage")
+
+                            print("----------------")
+
+                    enemy["hp"] -= damage
+
+                    print("You deal", damage)
+                else:
+                    print("not enough mana!")
+
+                print("----------------")
+
+            elif action == "b":
+
+                player["hp"] += 20
+                player["mana"] += 30
+
+                print("rest +20hp +30mana")
+
+                print("----------------")
+
+            elif action == "c":
+
+                print("potions not ready")
+
+                print("----------------")
+
+            elif action == "d":
+
+                print("run")
+
+                print("----------------")
+
+                break
+
+            elif action == "":
+
+                pass
+
+            else:
+
+                print("wrong")
+
+                print("----------------")
+
+                continue
+
+            if enemy["hp"] > 0:
+
+                enemy_damage = enemy["damage"]
+
+                crit_roll = random.randint(1, 100)
+
+                if enemy.get("crit_chance", 0) > 0:
+
+                    if crit_roll <= enemy["crit_chance"]:
+
+                        enemy_damage += 50
+
+                        print("boss landed crit")
+
+                        print("----------------")
+
+                if enemy_name == "dragon":
+
+                    fire_roll = random.randint(1, 100)
+
+                    if fire_roll <= enemy.get("fire_breath", 0):
+
+                        enemy_damage += 40
+
+                        print("dragon used fire breath")
+
+                        print("----------------")
+
+                    armor_roll = random.randint(1, 100)
+
+                    if armor_roll <= enemy.get("armor", 0):
+
+                        enemy["hp"] += 50
+
+                        print("dragon gained armor")
+
+                        print("----------------")
+
+                if enemy_name == "soul_eater":
+
+                    steal_roll = random.randint(1, 100)
+
+                    if steal_roll <= enemy.get("life_steal", 0):
+
+                        player["hp"] -= 20
+                        enemy["hp"] += 20
+
+                        print("soul eater stole life")
+
+                        print("----------------")
+
+                    fear_roll = random.randint(1, 100)
+
+                    if fear_roll <= enemy.get("fear_effect", 0):
+
+                        enemy_damage += 30
+
+                        print("fear effect activated")
+
+                        print("----------------")
+
+                if enemy_name == "god":
+
+                    divine_roll = random.randint(1, 100)
+
+                    if divine_roll <= enemy.get("divine_strike", 0):
+
+                        enemy_damage += 80
+
+                        print("god used divine strike")
+
+                        print("----------------")
+
+                player["hp"] -= enemy_damage
+
+                print(enemy_name, "hit", enemy_damage)
 
                 print("----------------")
 
         if enemy["hp"] <= 0:
-            print("you won")
+
+            print("boss defeated")
+
+            print("----------------")
 
         if player["hp"] <= 0:
+
             print("you died")
+
             break
 
-    elif option == "2":
-        print("shop not done")
-
     elif option == "3":
+
+        shop(player)
+
+        print("----------------")
+
+    elif option == "4":
+
         print("you runned away")
+
         break
 
     else:
+
         print("wrong option")
 
+        print("----------------")
 
 
 
@@ -146,7 +541,54 @@ ENEMIES = {
         "crit_chance": 20,
         "heal_chance": 20,
         "heal_amount": 25
+    },
 
+    "orc": {
+        "hp": 180,
+        "damage": 40,
+        "mana": 20,
+        "gold_drop": 80,
+        "crit_damage": 70,
+
+        "crit_chance": 25,
+        "heal_chance": 0,
+        "heal_amount": 0
+    },
+
+    "shadow_beast": {
+        "hp": 220,
+        "damage": 55,
+        "mana": 100,
+        "gold_drop": 120,
+        "crit_damage": 100,
+
+        "crit_chance": 35,
+        "heal_chance": 10,
+        "heal_amount": 20
+    },
+
+    "ice_golem": {
+        "hp": 400,
+        "damage": 35,
+        "mana": 0,
+        "gold_drop": 150,
+        "crit_damage": 60,
+
+        "crit_chance": 10,
+        "heal_chance": 20,
+        "heal_amount": 40
+    },
+
+    "dark_knight": {
+        "hp": 300,
+        "damage": 65,
+        "mana": 50,
+        "gold_drop": 200,
+        "crit_damage": 120,
+
+        "crit_chance": 30,
+        "heal_chance": 15,
+        "heal_amount": 30
     },    
     
     "angel": {
@@ -171,7 +613,7 @@ ENEMIES = {
         "crit_chance": 0,
         "heal_chance": 0,
         "heal_amount": 0,
-        "steal_gold_chanche": 35 #steals 100 gols usualy
+        "steal_gold_chanche": 35 #steals 100 gold 
     },
 
     "zombie": {
@@ -235,7 +677,7 @@ ENEMIES = {
         "crit_chance": 10,
         "heal_chance": 20,
         "heal_amount": 20,
-        "summon_zombie": 25
+        "summon_zombie": 10
     },
 
     "wizard": {
@@ -284,7 +726,7 @@ ENEMIES = {
 CHARACTERS = {
 
     "knight": {
-        "hp": 200,
+        "hp": 1000,
         "damage": 50,
         "mana": 30,
         "crit_damage": 80,
@@ -398,4 +840,63 @@ BOSSES = {
 
 
 
-mechanics.py:
+
+huj.py:
+def shop(player):
+    while True:
+        option = input(
+            "\n--- SHOP ---\n"
+            f"Gold: {player['gold']}\n"
+            "1 +100 hp (20 gold)\n"
+            "2 +10 damage (100 gold)\n"
+            "3 +30 mana (80 gold)\n"
+            "4 upgrade rest (120 gold)\n"
+            "5 exit\n"
+            "- "
+        )
+
+        if option == "1":
+            if player["gold"] >= 20:
+                player["gold"] -= 20
+                player["hp"] += 100
+
+                print("You used potion")
+                print("+100 HP")
+
+            else:
+                print("Not enough gold")
+
+        elif option == "2":
+            if player["gold"] >= 100:
+                player["gold"] -= 100
+                player["damage"] += 10
+                print("Damage upgraded")
+            else:
+                print("Not enough gold")
+
+        elif option == "3":
+            if player["gold"] >= 80:
+                player["gold"] -= 80
+                player["mana"] += 30
+                print("Mana increased")
+            else:
+                print("Not enough gold")
+
+        elif option == "4":
+            if player["gold"] >= 120:
+                player["gold"] -= 120
+                player["rest_heal_bonus"] = player.get("rest_heal_bonus", 0) + 10
+                player["rest_mana_bonus"] = player.get("rest_mana_bonus", 0) + 15
+                print("Rest upgraded")
+            else:
+                print("Not enough gold")
+
+        elif option == "5":
+            break
+
+        else:
+            print("Wrong option")
+
+
+
+
